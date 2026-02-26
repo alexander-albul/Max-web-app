@@ -45,7 +45,7 @@
 		min="0"
 		max="100"
 		value={dimLevel}
-		on:input={(e) => changeDim(parseFloat(e.currentTarget.value))}
+		oninput={(e) => changeDim(parseFloat(e.currentTarget.value))}
 		title="Регулировать затемнение"
 	/>
 	<span class="dim-value">{dimLevel}%</span>
@@ -65,8 +65,13 @@
 	}
 
 	.dim-container {
+		display: grid;
+		place-items: center;
 		position: relative;
 		z-index: 1;
+    height: 100%;
+	
+    background: black;
 	}
 
 	.dim-control {

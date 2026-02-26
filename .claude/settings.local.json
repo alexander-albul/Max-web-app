@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:www.figma.com)",
+      "Bash(dir \"C:\\\\Code\\\\Max web app\\\\src\" /s)",
+      "Bash(curl:*)",
+      "mcp__figma-desktop__get_design_context",
+      "mcp__figma-desktop__get_code_connect_suggestions",
+      "mcp__figma-desktop__send_code_connect_mappings",
+      "mcp__figma-desktop__get_screenshot",
+      "Bash(npm run build)",
+      "WebFetch(domain:ornament.akbars.digital)",
+      "mcp__figma-desktop__get_metadata"
+    ]
+  }
+}
