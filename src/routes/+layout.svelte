@@ -1,3 +1,7 @@
+<script module>
+	export const prerender = true;
+</script>
+
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import favicon from '$lib/assets/favicon.svg';
