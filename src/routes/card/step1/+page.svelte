@@ -16,9 +16,9 @@
 	let selectedDesign = $state(0);
 
 	const cardDesigns = [
-		{ id: 1, name: 'Классический', image: '/card-design-1.jpg' },
-		{ id: 2, name: 'Современный', image: '/card-design-2.jpg' },
-		{ id: 3, name: 'Минималистичный', image: '/card-design-3.jpg' }
+		{ id: 1, name: 'Классический', image: '/cards/adult-1.jpg' },
+		{ id: 2, name: 'Современный', image: '/cards/adult-2.jpg' },
+		{ id: 3, name: 'Минималистичный', image: '/cards/adult-3.jpg' }
 	];
 
 	function handleNext() {
@@ -32,7 +32,7 @@
 
 <div class="page">
 	<div class="back-button">
-		<button type="button" class="back-link" onclick={() => history.back()}>
+		<button type="button" class="back-link" onclick={() => {}}>
 			<svg width="24" height="24" viewBox="0 0 24 24" fill="none">
 				<path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 			</svg>
@@ -42,8 +42,8 @@
 	<Stepper {steps} currentStep={1} />
 
 	<div class="content">
-		<SectionMessage type="info" title="Карта жителя Республики Татарстан">
-			Оформите карту и получите доступ к льготам и скидкам на территории республики.
+		<SectionMessage type="info" title="Для заполнения заявки приготовьте:">
+ка
 		</SectionMessage>
 
 		<div class="section">
@@ -71,12 +71,7 @@
 			</div>
 
 			<div class="photo-preview">
-				<div class="photo-placeholder">
-					<svg width="64" height="64" viewBox="0 0 64 64" fill="none">
-						<circle cx="32" cy="24" r="12" stroke="currentColor" stroke-width="2"/>
-						<path d="M12 56C12 45 21 36 32 36C43 36 52 45 52 56" stroke="currentColor" stroke-width="2"/>
-					</svg>
-				</div>
+				<img class="card-preview-image" src={cardDesigns[selectedDesign].image} alt={cardDesigns[selectedDesign].name} />
 			</div>
 
 			<div class="designs-row">
@@ -87,7 +82,7 @@
 						class:selected={selectedDesign === index}
 						onclick={() => selectedDesign = index}
 					>
-						<div class="design-preview" style="background: linear-gradient(135deg, hsl({index * 60}, 70%, 60%), hsl({index * 60 + 30}, 70%, 40%));">
+						<div class="design-preview" style="background-image: url({design.image}); background-size: cover; background-position: center;">
 						</div>
 						{#if selectedDesign === index}
 							<div class="check-mark">
@@ -99,15 +94,6 @@
 						{/if}
 					</button>
 				{/each}
-
-				<button type="button" class="design-card more-designs">
-					<svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-						<circle cx="4" cy="10" r="2" fill="currentColor"/>
-						<circle cx="10" cy="10" r="2" fill="currentColor"/>
-						<circle cx="16" cy="10" r="2" fill="currentColor"/>
-					</svg>
-					<span>Ещё</span>
-				</button>
 			</div>
 		</div>
 	</div>
@@ -191,15 +177,11 @@
 		padding: 20px;
 	}
 
-	.photo-placeholder {
+	.card-preview-image {
 		width: 200px;
 		height: 126px;
-		background: var(--background-base-secondary, #f5f5f5);
 		border-radius: 12px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		color: var(--content-base-tertiary, #9e9e9e);
+		object-fit: cover;
 	}
 
 	.designs-row {
@@ -207,6 +189,21 @@
 		gap: 12px;
 		overflow-x: auto;
 		padding-bottom: 8px;
+		scrollbar-width: thin;
+		scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+	}
+
+	.designs-row::-webkit-scrollbar {
+		height: 4px;
+	}
+
+	.designs-row::-webkit-scrollbar-track {
+		background: transparent;
+	}
+
+	.designs-row::-webkit-scrollbar-thumb {
+		background: rgba(0, 0, 0, 0.2);
+		border-radius: 4px;
 	}
 
 	.design-card {
@@ -214,7 +211,7 @@
 		flex-shrink: 0;
 		width: 122px;
 		height: 77px;
-		border-radius: 8px;
+		border-radius: 20px;
 		border: 2px solid transparent;
 		overflow: hidden;
 		cursor: pointer;

@@ -7,8 +7,9 @@
 
 <div class="card-layout">
 	<header class="header">
-		<StatusBar />
-		<TitleBar />
+		<StatusBar>
+			<TitleBar />
+		</StatusBar>
 	</header>
 
 	<main class="content">
@@ -34,7 +35,6 @@
 		position: sticky;
 		top: 0;
 		z-index: 100;
-		background: var(--background-base-primary, #ffffff);
 	}
 
 	.content {

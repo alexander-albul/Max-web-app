@@ -1,12 +1,16 @@
 <script lang="ts">
+	import type { Snippet } from 'svelte';
+
 	interface Props {
 		time?: string;
 		class?: string;
+		children?: Snippet;
 	}
 
 	let {
 		time = '9:41',
-		class: className = ''
+		class: className = '',
+		children
 	}: Props = $props();
 
 	// Get current time
@@ -25,42 +29,44 @@
 	});
 </script>
 
-<div class="status-bar {className}">
-	<div class="status-left">
-		<span class="time">{currentTime}</span>
-	</div>
-	<div class="status-center">
-		<div class="dynamic-island"></div>
-	</div>
-	<div class="status-right">
-		<svg class="icon" width="18" height="12" viewBox="0 0 18 12" fill="none">
-			<path d="M1 4.5C2.5 2.5 5 1 9 1C13 1 15.5 2.5 17 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-			<path d="M3.5 7C4.5 5.5 6.5 4.5 9 4.5C11.5 4.5 13.5 5.5 14.5 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-			<circle cx="9" cy="10" r="1.5" fill="currentColor"/>
-		</svg>
-		<svg class="icon" width="17" height="12" viewBox="0 0 17 12" fill="none">
-			<rect x="1" y="2" width="2" height="8" rx="0.5" fill="currentColor"/>
-			<rect x="5" y="1" width="2" height="9" rx="0.5" fill="currentColor"/>
-			<rect x="9" y="0" width="2" height="10" rx="0.5" fill="currentColor"/>
-			<rect x="13" y="0" width="2" height="10" rx="0.5" fill="currentColor"/>
-		</svg>
-		<div class="battery">
-			<div class="battery-body">
-				<div class="battery-level"></div>
-			</div>
-			<div class="battery-cap"></div>
+<div class="status-wrapper {className}">
+	<div class="status-bar">
+		<div class="status-left">
+			<span class="time">{currentTime}</span>
+		</div>
+		<div class="status-right">
+			<!-- Cellular signal -->
+			<svg width="17" height="11" viewBox="0 0 17 11" fill="none">
+				<path d="M2 7.00293C2.55228 7.00293 3 7.45064 3 8.00293V10.0029C2.99982 10.5551 2.55218 11.0029 2 11.0029H1C0.447824 11.0029 0.000175969 10.5551 0 10.0029V8.00293C0 7.45064 0.447715 7.00293 1 7.00293H2ZM6.66699 5.00293C7.21913 5.00311 7.66699 5.45075 7.66699 6.00293V10.0029C7.66682 10.555 7.21902 11.0028 6.66699 11.0029H5.66699C5.11482 11.0029 4.66717 10.5551 4.66699 10.0029V6.00293C4.66699 5.45064 5.11471 5.00293 5.66699 5.00293H6.66699ZM11.333 2.66895C11.8852 2.66895 12.3328 3.11681 12.333 3.66895V10.0029C12.3328 10.5551 11.8852 11.0029 11.333 11.0029H10.333C9.78098 11.0028 9.33318 10.555 9.33301 10.0029V3.66895C9.33318 3.11692 9.78098 2.66912 10.333 2.66895H11.333ZM16 0.335938C16.5523 0.335937 17 0.783653 17 1.33594V10.0029C16.9998 10.5551 16.5522 11.0029 16 11.0029H15C14.4478 11.0029 14.0002 10.5551 14 10.0029V1.33594C14 0.783653 14.4477 0.335938 15 0.335938H16Z" fill="black"/>
+			</svg>
+			<!-- WiFi -->
+			<svg width="16" height="11" viewBox="0 0 16 11" fill="none">
+				<path d="M5.4541 8.40057C6.7297 7.32168 8.5985 7.32168 9.874 8.40057C9.9381 8.45859 9.9748 8.54074 9.9766 8.62713C9.9783 8.71359 9.9445 8.79702 9.8828 8.8576L7.8857 10.8732C7.8272 10.9324 7.7473 10.966 7.6641 10.966C7.5808 10.966 7.5009 10.9324 7.4424 10.8732L5.4443 8.8576C5.3827 8.797 5.3488 8.71351 5.3506 8.62713C5.3524 8.54068 5.39 8.45855 5.4541 8.40057ZM2.7891 5.71111C5.5372 3.15507 9.7929 3.15512 12.541 5.71111C12.603 5.77097 12.6387 5.85351 12.6397 5.93963C12.6405 6.02581 12.6066 6.10892 12.5459 6.1701L11.3916 7.33709C11.2726 7.45619 11.0801 7.45885 10.958 7.34295C10.0556 6.52577 8.8815 6.07337 7.6641 6.07342C6.4474 6.07392 5.2739 6.52628 4.3721 7.34295C4.25 7.45877 4.0574 7.45617 3.9385 7.33709L2.7842 6.1701C2.7235 6.10903 2.6896 6.02572 2.6904 5.93963C2.6914 5.8535 2.7271 5.77095 2.7891 5.71111ZM0.124 3.02947C4.3391 -1.0097 10.9891 -1.00995 15.2041 3.02947C15.265 3.08942 15.2992 3.17156 15.2998 3.25701C15.3003 3.34257 15.2663 3.42481 15.2061 3.48553L14.0498 4.65252C13.9307 4.77199 13.738 4.77324 13.6172 4.65545C12.0113 3.12872 9.8799 2.27764 7.6641 2.27752C5.448 2.27751 3.3161 3.12856 1.71 4.65545C1.5892 4.77344 1.3964 4.77222 1.2774 4.65252L0.1211 3.48553C0.0608 3.42476 0.0268 3.34259 0.0274 3.25701C0.028 3.1715 0.063 3.08939 0.124 3.02947Z" fill="black"/>
+			</svg>
+			<!-- Battery -->
+			<svg width="25" height="11" viewBox="0 0 25 11" fill="none">
+				<path opacity="0.4" d="M4.3335 0.668945H18.3335C19.0418 0.668945 19.5433 0.669161 19.9351 0.701172C20.3209 0.732712 20.5566 0.792399 20.7417 0.886719C21.118 1.07845 21.424 1.38449 21.6157 1.76074C21.71 1.94586 21.7697 2.18158 21.8013 2.56738C21.8333 2.95918 21.8335 3.46063 21.8335 4.16895V6.66895C21.8335 7.37726 21.8333 7.87871 21.8013 8.27051C21.7697 8.65631 21.71 8.89204 21.6157 9.07715C21.424 9.4534 21.118 9.75944 20.7417 9.95117C20.5566 10.0455 20.3209 10.1052 19.9351 10.1367C19.5433 10.1687 19.0418 10.1689 18.3335 10.1689H4.3335C3.6252 10.1689 3.1237 10.1687 2.7319 10.1367C2.3461 10.1052 2.1104 10.0455 1.9253 9.95117C1.549 9.75944 1.243 9.4534 1.0513 9.07715C0.9569 8.89204 0.8973 8.65631 0.8657 8.27051C0.8337 7.87871 0.8335 7.37726 0.8335 6.66895V4.16895C0.8335 3.46063 0.8337 2.95918 0.8657 2.56738C0.8973 2.18158 0.9569 1.94586 1.0513 1.76074C1.243 1.38449 1.549 1.07845 1.9253 0.886719C2.1104 0.792399 2.3461 0.732712 2.7319 0.701172C3.1237 0.669161 3.6252 0.668945 4.3335 0.668945Z" stroke="black"/>
+				<path opacity="0.4" d="M23.3335 3.6709C24.1957 3.89305 24.8333 4.67392 24.8335 5.60547C24.8335 6.53714 24.1958 7.31777 23.3335 7.54004V3.6709Z" fill="black"/>
+				<rect x="2.3335" y="2.16895" width="18" height="6.5" rx="1" fill="black"/>
+			</svg>
 		</div>
 	</div>
+	{#if children}
+		{@render children()}
+	{/if}
 </div>
 
 <style>
+	.status-wrapper {
+		background: #565656;
+	}
+
 	.status-bar {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
 		height: 44px;
 		padding: 0 16px;
-		background: var(--background-base-primary, #ffffff);
 	}
 
 	.status-left {
@@ -74,56 +80,9 @@
 		color: var(--content-base-primary, #000000);
 	}
 
-	.status-center {
-		flex: 1;
-		display: flex;
-		justify-content: center;
-	}
-
-	.dynamic-island {
-		width: 120px;
-		height: 32px;
-		background: #000000;
-		border-radius: 20px;
-	}
-
 	.status-right {
-		flex: 1;
 		display: flex;
 		align-items: center;
-		justify-content: flex-end;
 		gap: 6px;
-	}
-
-	.icon {
-		color: var(--content-base-primary, #000000);
-	}
-
-	.battery {
-		display: flex;
-		align-items: center;
-		gap: 1px;
-	}
-
-	.battery-body {
-		width: 25px;
-		height: 12px;
-		border: 1.5px solid var(--content-base-primary, #000000);
-		border-radius: 3px;
-		padding: 2px;
-	}
-
-	.battery-level {
-		width: 100%;
-		height: 100%;
-		background: var(--content-base-primary, #000000);
-		border-radius: 1px;
-	}
-
-	.battery-cap {
-		width: 2px;
-		height: 5px;
-		background: var(--content-base-primary, #000000);
-		border-radius: 0 1px 1px 0;
 	}
 </style>
