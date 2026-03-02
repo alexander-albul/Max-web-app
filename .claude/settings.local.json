@@ -10,7 +10,8 @@
       "mcp__figma-desktop__get_screenshot",
       "Bash(npm run build)",
       "WebFetch(domain:ornament.akbars.digital)",
-      "mcp__figma-desktop__get_metadata"
+      "mcp__figma-desktop__get_metadata",
+      "Bash(ls:*)"
     ]
   }
 }
