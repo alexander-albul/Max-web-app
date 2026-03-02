@@ -1,7 +1,3 @@
-<script module>
-	export const prerender = true;
-</script>
-
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import favicon from '$lib/assets/favicon.svg';
@@ -31,13 +27,13 @@
 	<link rel="icon" href={favicon} />
 </svelte:head>
 
-<div class="dim-overlay" style="opacity: {dimLevel / 100}"></div>
+<!-- <div class="dim-overlay" style="opacity: {dimLevel / 100}"></div> -->
 
 <div class="dim-container">
 	{@render children()}
 </div>
 
-<div class="dim-control">
+<!-- <div class="dim-control">
 	<span class="dim-icon">🌙</span>
 	<input
 		type="range"
@@ -49,10 +45,10 @@
 		title="Регулировать затемнение"
 	/>
 	<span class="dim-value">{dimLevel}%</span>
-</div>
+</div> -->
 
 <style>
-	.dim-overlay {
+	/* .dim-overlay {
 		position: fixed;
 		top: 0;
 		left: 0;
@@ -62,19 +58,19 @@
 		pointer-events: none;
 		z-index: 9998;
 		transition: opacity 0.1s ease;
-	}
+	} */
 
 	.dim-container {
 		display: grid;
 		place-items: center;
 		position: relative;
 		z-index: 1;
-    height: 100%;
+    	height: 100%;
 	
     background: black;
 	}
 
-	.dim-control {
+	/* .dim-control {
 		position: fixed;
 		bottom: 20px;
 		right: 20px;
@@ -125,5 +121,7 @@
 		font-size: 12px;
 		min-width: 35px;
 		text-align: right;
-	}
+	} */
 </style>
+
+<!-- TODO: Вынести Dim container в отдельный компонент -->
