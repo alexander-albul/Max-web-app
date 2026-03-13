@@ -17,86 +17,7 @@
 			</p>
 		</div>
 
-		<div class="app-promo">
-			<div class="promo-content">
-				<p class="promo-text">Скачайте приложение «Карта жителя РТ» и узнайте все преимущества!</p>
-
-				<div class="store-buttons">
-					<a href="#" class="store-button">
-						<svg width="136" height="40" viewBox="0 0 136 40" fill="none">
-							<rect width="136" height="40" rx="6" fill="#000000" />
-							<text
-								x="68"
-								y="15"
-								text-anchor="middle"
-								fill="white"
-								font-size="8"
-								font-family="sans-serif">Загрузите в</text
-							>
-							<text
-								x="68"
-								y="28"
-								text-anchor="middle"
-								fill="white"
-								font-size="12"
-								font-weight="600"
-								font-family="sans-serif">App Store</text
-							>
-						</svg>
-					</a>
-					<a href="#" class="store-button">
-						<svg width="136" height="40" viewBox="0 0 136 40" fill="none">
-							<rect width="136" height="40" rx="6" fill="#000000" />
-							<text
-								x="68"
-								y="15"
-								text-anchor="middle"
-								fill="white"
-								font-size="8"
-								font-family="sans-serif">Доступно в</text
-							>
-							<text
-								x="68"
-								y="28"
-								text-anchor="middle"
-								fill="white"
-								font-size="12"
-								font-weight="600"
-								font-family="sans-serif">Google Play</text
-							>
-						</svg>
-					</a>
-				</div>
-
-				<div class="app-preview">
-					<div class="phone-mockup">
-						<div class="phone-screen">
-							<div class="app-header">
-								<div class="app-logo">КЖ</div>
-								<span class="app-name">Карта жителя РТ</span>
-							</div>
-							<div class="app-card">
-								<div class="card-gradient"></div>
-							</div>
-							<div class="app-features">
-								<div class="feature">
-									<div class="feature-icon"></div>
-									<span>Скидки</span>
-								</div>
-								<div class="feature">
-									<div class="feature-icon"></div>
-									<span>Льготы</span>
-								</div>
-								<div class="feature">
-									<div class="feature-icon"></div>
-									<span>Бонусы</span>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+		<img class="phone-ad" src="/success/Phone_ad.png" alt="Phone ad" />
 	</div>
 
 	<div class="footer">
@@ -269,6 +190,13 @@
 		color: white;
 		font-size: 10px;
 		font-weight: 500;
+	}
+
+	.phone-ad {
+		width: 100%;
+		height: auto;
+		display: block;
+		object-fit: contain;
 	}
 
 	.footer {

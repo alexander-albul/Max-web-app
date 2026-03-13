@@ -1,13 +1,16 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { ChevronLeft, MoreHorizontal, Paperclip, Smile, Mic, LayoutGrid } from 'lucide-svelte';
+	import StatusBar from '$lib/components/StatusBar.svelte';
 </script>
 
 <svelte:head>
 	<title>Карта жителя РТ</title>
 </svelte:head>
 
+<div class="phone-frame">
 <div class="messenger">
+	<StatusBar class="messenger-statusbar" />
 	<!-- Header -->
 	<div class="header">
 		<button class="back-btn" aria-label="Назад">
@@ -40,7 +43,7 @@
 
 	<!-- Bottom bar -->
 	<div class="bottom-bar">
-		<button class="open-btn" onclick={() => goto('/card')}>
+		<button class="open-btn" onclick={() => goto('/main-menu')}>
 			<LayoutGrid size={18} color="white" />
 			<span>Открыть</span>
 		</button>
@@ -62,19 +65,31 @@
 		</button>
 	</div>
 </div>
+</div>
 
 <style>
+	.phone-frame {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		height: 100svh;
+		max-height: 812px;
+		width: 100%;
+		max-width: 375px;
+		overflow: hidden;
+		box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+	}
+
 	.messenger {
 		display: flex;
 		flex-direction: column;
-		width: 375px;
-		height: 812px;
+		width: 100%;
+		height: 100%;
 		background: #b8d9f0;
 		background-image:
 			linear-gradient(160deg, #a8d4ee 0%, #c5e4f5 50%, #b0d8f0 100%);
 		overflow: hidden;
 		position: relative;
-		border-radius: 24px;
 	}
 
 	.messenger::before {
@@ -82,11 +97,20 @@
 		position: absolute;
 		inset: 0;
 		background-image: url('/pattern_space.svg');
-		background-size: 500px;
+		background-size: 250px;
 		background-repeat: repeat;
 		opacity: 0.35;
 		pointer-events: none;
 		z-index: 0;
+	}
+
+	:global(.messenger-statusbar) {
+		position: relative;
+		z-index: 1;
+		background: rgba(255, 255, 255, 0.55) !important;
+		backdrop-filter: blur(12px);
+		-webkit-backdrop-filter: blur(12px);
+		border-bottom: none;
 	}
 
 	.header {

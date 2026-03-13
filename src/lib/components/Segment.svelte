@@ -1,7 +1,11 @@
 <script lang="ts">
+	import type { Snippet } from 'svelte';
+	import type { Component } from 'svelte';
+
 	interface SegmentOption {
 		value: string;
 		label: string;
+		icon?: Component<{ size?: number; color?: string }>;
 		disabled?: boolean;
 	}
 
@@ -24,6 +28,10 @@
 		class: className = '',
 		onChange
 	}: Props = $props();
+
+	function getIconSize(s: 's' | 'm' | 'l'): number {
+		return s === 's' ? 16 : s === 'm' ? 20 : 24;
+	}
 
 	let containerRef: HTMLDivElement;
 	let indicatorStyle = $state('');
@@ -73,11 +81,15 @@
 			class="segment-option"
 			class:active={value === option.value}
 			class:option-disabled={option.disabled}
+			class:has-icon={option.icon}
 			role="tab"
 			aria-selected={value === option.value}
 			disabled={disabled || option.disabled}
 			onclick={() => handleSelect(option.value, option.disabled)}
 		>
+			{#if option.icon}
+				<option.icon size={getIconSize(size)} />
+			{/if}
 			{option.label}
 		</button>
 	{/each}
@@ -119,6 +131,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		gap: 6px;
 		border: none;
 		background: transparent;
 		cursor: pointer;

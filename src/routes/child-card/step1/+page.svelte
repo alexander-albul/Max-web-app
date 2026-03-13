@@ -13,17 +13,27 @@
 		{ label: 'Анкета' },
 		{ label: 'Код' },
 		{ label: 'Паспорт' },
+		{ label: 'Документ ребёнка' },
 		{ label: 'Отделение' }
 	];
 
-	let selectedDesign = $state(0);
+	let selectedChildDesign = $state(0);
+	let selectedAdultDesign = $state(0);
 	let selectedCity = $state<string | null>(null);
 	let isCityModalOpen = $state(false);
 	let submitted = $state(false);
 
 	const cityError = $derived(submitted && !selectedCity ? 'Обязательное поле' : '');
 
-	const cardDesigns = [
+	// Дизайны детской карты
+	const childCardDesigns = [
+		{ id: 1, name: 'Стандарт', image: '/cards/child-1.jpg' },
+		{ id: 2, name: 'Светодиодная', image: '/cards/child-2.jpg' },
+		{ id: 3, name: 'Светодиод', image: '/cards/child-3.jpg' }
+	];
+
+	// Дизайны карты жителя РТ
+	const adultCardDesigns = [
 		{ id: 1, name: 'Классический', image: '/cards/adult-1.jpg' },
 		{ id: 2, name: 'Современный', image: '/cards/adult-2.jpg' },
 		{ id: 3, name: 'Минималистичный', image: '/cards/adult-3.jpg' }
@@ -38,7 +48,7 @@
 			}, 0);
 			return;
 		}
-		goto('/card/step2');
+		goto('/child-card/step2');
 	}
 
 	function handleCitySelect(city: string) {
@@ -55,13 +65,13 @@
 </script>
 
 <svelte:head>
-	<title>Оформление карты - Шаг 1</title>
+	<title>Оформление детской карты - Шаг 1</title>
 </svelte:head>
 
 <div class="page">
 	<BackButton onclick={() => goto('/main-menu')} />
 
-	<Stepper {steps} currentStep={1} />
+	<Stepper {steps} currentStep={1} title={`Заявка на выпуск \n Детской карты`} />
 
 	<div class="content">
 		<SectionMessage type="info" showIcon={false}>
@@ -69,7 +79,7 @@
 			<ul>
 				<li>свой паспорт</li>
 				<li>свидетельство о рождении ребёнка</li>
-				<li>паспорт ребёнка, если ребёнок старше 14 лет</li>
+				<li>паспорт ребёнка, если ребёнок старше 14 лет</li>
 				<li>номер телефона ребёнка</li>
 			</ul>
 		</SectionMessage>
@@ -78,8 +88,7 @@
 
 		<div class="section">
 			<div class="section-header">
-				<span class="section-title">Город получения карты</span>
-				<span class="section-subtitle">Выберите город, в котором вы хотите получить карту</span>
+				<span class="section-title">Где будете получать карту?</span>
 			</div>
 
 			<div class="field-button-wrapper">
@@ -91,7 +100,7 @@
 						/>
 					</svg>
 					<span class="city-button-text">
-						{selectedCity || 'Выбрать город'}
+						{selectedCity || 'Выберите населённый пункт'}
 					</span>
 					<svg width="20" height="20" viewBox="0 0 20 20" fill="none" class="chevron-icon">
 						<path
@@ -111,33 +120,82 @@
 
 		<Divider spacing="m" />
 
+		<!-- Секция выбора дизайна детской карты -->
 		<div class="section">
 			<div class="section-header">
-				<span class="section-title">Выберите дизайн карты</span>
-				<span class="section-subtitle">Будет применен при наличии заготовок</span>
+				<span class="section-title">Выберите дизайн Детской карты</span>
+				<span class="section-subtitle">Карта будет выпущена в выбранном дизайне при наличии заготовок</span>
 			</div>
 
 			<div class="photo-preview">
 				<img
 					class="card-preview-image"
-					src={cardDesigns[selectedDesign].image}
-					alt={cardDesigns[selectedDesign].name}
+					src={childCardDesigns[selectedChildDesign].image}
+					alt={childCardDesigns[selectedChildDesign].name}
 				/>
 			</div>
 
 			<div class="designs-row">
-				{#each cardDesigns as design, index}
+				{#each childCardDesigns as design, index}
 					<button
 						type="button"
 						class="design-card"
-						class:selected={selectedDesign === index}
-						onclick={() => (selectedDesign = index)}
+						class:selected={selectedChildDesign === index}
+						onclick={() => (selectedChildDesign = index)}
 					>
 						<div
 							class="design-preview"
 							style="background-image: url({design.image}); background-size: cover; background-position: center;"
 						></div>
-						{#if selectedDesign === index}
+						{#if selectedChildDesign === index}
+							<div class="check-mark">
+								<svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+									<circle cx="8" cy="8" r="8" fill="#009B3A" />
+									<path
+										d="M5 8L7 10L11 6"
+										stroke="white"
+										stroke-width="1.5"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									/>
+								</svg>
+							</div>
+						{/if}
+					</button>
+				{/each}
+			</div>
+		</div>
+
+		<Divider spacing="m" />
+
+		<!-- Секция выбора дизайна карты жителя РТ -->
+		<div class="section">
+			<div class="section-header">
+				<span class="section-title">Выберите дизайн Карты Жителя РТ</span>
+				<span class="section-subtitle">Будет выпущена, если не была получена ранее. Выбранный дизайн будет применен при наличии заготовок</span>
+			</div>
+
+			<div class="photo-preview">
+				<img
+					class="card-preview-image"
+					src={adultCardDesigns[selectedAdultDesign].image}
+					alt={adultCardDesigns[selectedAdultDesign].name}
+				/>
+			</div>
+
+			<div class="designs-row">
+				{#each adultCardDesigns as design, index}
+					<button
+						type="button"
+						class="design-card"
+						class:selected={selectedAdultDesign === index}
+						onclick={() => (selectedAdultDesign = index)}
+					>
+						<div
+							class="design-preview"
+							style="background-image: url({design.image}); background-size: cover; background-position: center;"
+						></div>
+						{#if selectedAdultDesign === index}
 							<div class="check-mark">
 								<svg width="16" height="16" viewBox="0 0 16 16" fill="none">
 									<circle cx="8" cy="8" r="8" fill="#009B3A" />
@@ -162,14 +220,12 @@
 	</div>
 
 	<CityModal
-	bind:open={isCityModalOpen}
-	cities={tatarstanCities}
-	onSelect={handleCitySelect}
-	onClose={closeCityModal}
-/>
+		bind:open={isCityModalOpen}
+		cities={tatarstanCities}
+		onSelect={handleCitySelect}
+		onClose={closeCityModal}
+	/>
 </div>
-
-
 
 <style>
 	.page {
@@ -218,12 +274,6 @@
 		font-size: 14px;
 		line-height: 20px;
 		color: var(--content-base-secondary, #6e6d6d);
-	}
-
-	.upload-content {
-		display: flex;
-		align-items: center;
-		gap: 8px;
 	}
 
 	.photo-preview {
@@ -288,18 +338,6 @@
 		position: absolute;
 		top: 4px;
 		right: 4px;
-	}
-
-	.design-card.more-designs {
-		background: var(--background-base-secondary, #f5f5f5);
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		gap: 4px;
-		color: var(--content-base-secondary, #6e6d6d);
-		font-family: 'Roboto', sans-serif;
-		font-size: 12px;
 	}
 
 	.footer {
