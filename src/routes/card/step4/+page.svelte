@@ -17,6 +17,41 @@
 		{ label: 'Отделение' }
 	];
 
+	// Autofill data
+	const autofill = {
+		passportSeries: '1624',
+		passportNumber: '456789',
+		issueDate: new Date(2015, 6, 10),
+		departmentCode: '165-001',
+		birthPlace: 'Казань, Республика Татарстан, Россия'
+	};
+
+	const issuedBySuggestions = [
+		'МВД по Республике Татарстан',
+		'ОУФМС России по РТ в Советском районе г. Казани',
+		'ОУФМС России по РТ в Вахитовском районе г. Казани',
+		'ОУФМС России по РТ в Ново-Савиновском районе г. Казани',
+		'ОУФМС России по РТ в Авиастроительном районе г. Казани',
+		'ОУФМС России по РТ в Приволжском районе г. Казани',
+		'ОУФМС России по РТ в Кировском районе г. Казани',
+		'ОМВД России по Набережночелнинскому р-ну РТ',
+		'ОУФМС России по РТ в г. Набережные Челны',
+		'ОМВД России по Нижнекамскому р-ну РТ'
+	];
+
+	const addressSuggestions = [
+		'г. Казань, ул. Баумана, д. 1, кв. 5',
+		'г. Казань, ул. Кремлёвская, д. 18, кв. 12',
+		'г. Казань, пр. Победы, д. 42, кв. 88',
+		'г. Казань, ул. Чистопольская, д. 67а, кв. 3',
+		'г. Казань, ул. Карла Маркса, д. 10, кв. 21',
+		'г. Набережные Челны, пр. Набережночелнинский, д. 5, кв. 14',
+		'г. Нижнекамск, ул. Строителей, д. 30, кв. 7',
+		'г. Альметьевск, ул. Ленина, д. 22, кв. 4',
+		'г. Зеленодольск, ул. Советская, д. 8, кв. 11',
+		'г. Бугульма, ул. Мира, д. 15, кв. 2'
+	];
+
 	// Form data
 	let passportSeries = $state('');
 	let passportNumber = $state('');
@@ -54,6 +89,23 @@
 	$effect(() => {
 		if (sameAddress) {
 			actualAddress = registrationAddress;
+		}
+	});
+
+	$effect(() => {
+		const stored = localStorage.getItem('gosuslugi_data');
+		if (stored) {
+			try {
+				const data = JSON.parse(stored);
+				passportSeries = data.passportSeries ?? '';
+				passportNumber = data.passportNumber ?? '';
+				issueDate = data.issueDate ? new Date(data.issueDate) : null;
+				issuedBy = data.issuedBy ?? '';
+				departmentCode = data.departmentCode ?? '';
+				birthPlace = data.birthPlace ?? '';
+				registrationAddress = data.registrationAddress ?? '';
+				actualAddress = data.actualAddress ?? '';
+			} catch {}
 		}
 	});
 
@@ -97,11 +149,11 @@
 			<h3 class="section-title">Паспортные данные</h3>
 
 			<div class="form-fields">
-				<Input bind:value={passportSeries} label="Серия" placeholder="0000" required error={errors.passportSeries} />
+				<Input bind:value={passportSeries} label="Серия" placeholder="0000" required error={errors.passportSeries} onclick={() => { if (!passportSeries) passportSeries = autofill.passportSeries; }} />
 
-				<Input bind:value={passportNumber} label="Номер" placeholder="000000" required error={errors.passportNumber} />
+				<Input bind:value={passportNumber} label="Номер" placeholder="000000" required error={errors.passportNumber} onclick={() => { if (!passportNumber) passportNumber = autofill.passportNumber; }} />
 
-				<DatePicker bind:value={issueDate} label="Дата выдачи" required maxDate={new Date()} error={errors.issueDate} />
+				<DatePicker bind:value={issueDate} label="Дата выдачи" required maxDate={new Date()} error={errors.issueDate} onclick={() => { if (!issueDate) issueDate = autofill.issueDate; }} />
 
 				<Input
 					bind:value={departmentCode}
@@ -109,6 +161,7 @@
 					placeholder="000-000"
 					required
 					error={errors.departmentCode}
+					onclick={() => { if (!departmentCode) departmentCode = autofill.departmentCode; }}
 				/>
 
 				<div class="field-button-wrapper">
@@ -152,6 +205,7 @@
 					placeholder="Город, область, страна"
 					required
 					error={errors.birthPlace}
+					onclick={() => { if (!birthPlace) birthPlace = autofill.birthPlace; }}
 				/>
 			</div>
 		</div>
@@ -250,6 +304,7 @@
 	title="Кем выдан"
 	placeholder="Наименование органа"
 	value={issuedBy}
+	suggestions={issuedBySuggestions}
 	onSave={(v) => (issuedBy = v)}
 	onClose={() => (isIssuedByModalOpen = false)}
 />
@@ -259,6 +314,7 @@
 	title="Адрес регистрации"
 	placeholder="Укажите адрес регистрации"
 	value={registrationAddress}
+	suggestions={addressSuggestions}
 	onSave={(v) => (registrationAddress = v)}
 	onClose={() => (isRegistrationAddressModalOpen = false)}
 />
@@ -268,6 +324,7 @@
 	title="Фактический адрес"
 	placeholder="Укажите фактический адрес"
 	value={actualAddress}
+	suggestions={addressSuggestions}
 	onSave={(v) => (actualAddress = v)}
 	onClose={() => (isActualAddressModalOpen = false)}
 />

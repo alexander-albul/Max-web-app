@@ -4,11 +4,12 @@
 		title: string;
 		placeholder?: string;
 		value: string;
+		suggestions?: string[];
 		onSave: (value: string) => void;
 		onClose: () => void;
 	}
 
-	let { open = $bindable(false), title, placeholder = '', value, onSave, onClose }: Props = $props();
+	let { open = $bindable(false), title, placeholder = '', value, suggestions = [], onSave, onClose }: Props = $props();
 
 	let inputValue = $state('');
 
@@ -84,6 +85,19 @@
 					bind:value={inputValue}
 					autofocus
 				/>
+				{#if suggestions.length > 0}
+					<div class="suggestions">
+						{#each suggestions as suggestion}
+							<button
+								type="button"
+								class="suggestion-item"
+								onclick={() => { inputValue = suggestion; }}
+							>
+								{suggestion}
+							</button>
+						{/each}
+					</div>
+				{/if}
 			</div>
 
 			<div class="modal-footer">
@@ -208,5 +222,36 @@
 	.save-button:disabled {
 		opacity: 0.5;
 		cursor: not-allowed;
+	}
+
+	.suggestions {
+		display: flex;
+		flex-direction: column;
+		margin-top: 8px;
+		border: 1px solid #e0e0e0;
+		border-radius: 12px;
+		overflow: hidden;
+	}
+
+	.suggestion-item {
+		background: none;
+		border: none;
+		border-bottom: 1px solid #f0f0f0;
+		padding: 12px 16px;
+		font-family: 'Roboto', sans-serif;
+		font-size: 14px;
+		line-height: 20px;
+		color: var(--content-base-primary, #212121);
+		text-align: left;
+		cursor: pointer;
+		transition: background 0.15s ease;
+	}
+
+	.suggestion-item:last-child {
+		border-bottom: none;
+	}
+
+	.suggestion-item:hover {
+		background: #f5f5f5;
 	}
 </style>

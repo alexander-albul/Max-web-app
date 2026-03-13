@@ -15,6 +15,7 @@
 		class?: string;
 		onInput?: (value: string) => void;
 		onChange?: (value: string) => void;
+		onclick?: () => void;
 	}
 
 	let {
@@ -32,7 +33,8 @@
 		clearable = false,
 		class: className = '',
 		onInput,
-		onChange
+		onChange,
+		onclick
 	}: Props = $props();
 
 	let isFocused = $state(false);
@@ -109,6 +111,7 @@
 				onchange={handleChange}
 				onfocus={handleFocus}
 				onblur={handleBlur}
+				onclick={onclick}
 			/>
 		</div>
 

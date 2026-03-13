@@ -12,6 +12,7 @@
 		maxDate?: Date;
 		class?: string;
 		onChange?: (date: Date | null) => void;
+		onclick?: () => void;
 	}
 
 	let {
@@ -26,7 +27,8 @@
 		minDate,
 		maxDate,
 		class: className = '',
-		onChange
+		onChange,
+		onclick
 	}: Props = $props();
 
 	let isOpen = $state(false);
@@ -130,6 +132,7 @@
 
 	function handleToggle() {
 		if (disabled) return;
+		onclick?.();
 		isOpen = !isOpen;
 		isFocused = isOpen;
 	}
