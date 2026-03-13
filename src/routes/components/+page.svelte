@@ -101,11 +101,7 @@
 		<div class="component-grid">
 			<div class="demo-block">
 				<h3>Базовый</h3>
-				<DatePicker
-					bind:value={selectedDate}
-					label="Дата рождения"
-					hint="Выберите дату"
-				/>
+				<DatePicker bind:value={selectedDate} label="Дата рождения" hint="Выберите дату" />
 				{#if selectedDate}
 					<p class="selected-value">Выбрано: {selectedDate.toLocaleDateString('ru-RU')}</p>
 				{/if}
@@ -113,11 +109,7 @@
 
 			<div class="demo-block">
 				<h3>С ограничениями</h3>
-				<DatePicker
-					label="Дата бронирования"
-					minDate={new Date()}
-					hint="Только будущие даты"
-				/>
+				<DatePicker label="Дата бронирования" minDate={new Date()} hint="Только будущие даты" />
 			</div>
 
 			<div class="demo-block">
@@ -215,9 +207,7 @@
 				Это информационное сообщение для пользователя.
 			</SectionMessage>
 
-			<SectionMessage type="success" title="Успех">
-				Операция выполнена успешно!
-			</SectionMessage>
+			<SectionMessage type="success" title="Успех">Операция выполнена успешно!</SectionMessage>
 
 			<SectionMessage type="warning" title="Внимание">
 				Пожалуйста, обратите внимание на эту информацию.
@@ -307,7 +297,7 @@
 	}
 
 	h1 {
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Roboto', sans-serif;
 		font-weight: 700;
 		font-size: 32px;
 		line-height: 40px;
@@ -316,7 +306,7 @@
 	}
 
 	h2 {
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Roboto', sans-serif;
 		font-weight: 600;
 		font-size: 24px;
 		line-height: 32px;
@@ -325,7 +315,7 @@
 	}
 
 	h3 {
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Roboto', sans-serif;
 		font-weight: 500;
 		font-size: 16px;
 		line-height: 24px;
@@ -334,7 +324,7 @@
 	}
 
 	p {
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Roboto', sans-serif;
 		font-size: 14px;
 		line-height: 20px;
 		color: var(--content-base-primary, #212121);

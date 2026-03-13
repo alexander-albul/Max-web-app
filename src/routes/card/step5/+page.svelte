@@ -4,6 +4,7 @@
 	import Segment from '$lib/components/Segment.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import InteractiveMap from '$lib/components/InteractiveMap.svelte';
+	import BackButton from '$lib/components/BackButton.svelte';
 
 	const steps = [
 		{ label: 'Оформление' },
@@ -19,7 +20,7 @@
 	];
 
 	let deliveryType = $state('office');
-	let selectedOffice = $state<typeof offices[0] | null>(null);
+	let selectedOffice = $state<(typeof offices)[0] | null>(null);
 
 	const offices = [
 		{
@@ -65,7 +66,7 @@
 		}
 	];
 
-	function handleSelectOffice(office: typeof offices[0]) {
+	function handleSelectOffice(office: (typeof offices)[0]) {
 		selectedOffice = office;
 	}
 
@@ -86,13 +87,7 @@
 </svelte:head>
 
 <div class="page">
-	<div class="back-button">
-		<button type="button" class="back-link" onclick={() => history.back()}>
-			<svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-				<path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-			</svg>
-		</button>
-	</div>
+	<BackButton onclick={() => history.back()} />
 
 	<Stepper {steps} currentStep={5} />
 
@@ -107,7 +102,7 @@
 				<div class="section-header">
 					<h3 class="section-title">Отделение банка</h3>
 					{#if selectedOffice}
-						<button type="button" class="link-button" onclick={() => selectedOffice = null}>
+						<button type="button" class="link-button" onclick={() => (selectedOffice = null)}>
 							Сбросить
 						</button>
 					{/if}
@@ -123,7 +118,7 @@
 							{/if}
 							<p class="office-phone">{selectedOffice.phone}</p>
 						</div>
-						<button type="button" class="change-button" onclick={() => selectedOffice = null}>
+						<button type="button" class="change-button" onclick={() => (selectedOffice = null)}>
 							Изменить
 						</button>
 					</div>
@@ -131,11 +126,7 @@
 
 				<div class="map-section">
 					<p class="map-hint">Кликните на метку для выбора отделения</p>
-					<InteractiveMap
-						{offices}
-						bind:selectedOffice
-						onSelectOffice={handleSelectOffice}
-					/>
+					<InteractiveMap {offices} bind:selectedOffice onSelectOffice={handleSelectOffice} />
 				</div>
 			</div>
 		{:else}
@@ -166,23 +157,6 @@
 		gap: 24px;
 	}
 
-	.back-button {
-		margin-bottom: -12px;
-	}
-
-	.back-link {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 24px;
-		height: 24px;
-		border: none;
-		background: transparent;
-		cursor: pointer;
-		padding: 0;
-		color: var(--content-base-primary, #212121);
-	}
-
 	.content {
 		display: flex;
 		flex-direction: column;
@@ -204,7 +178,7 @@
 	}
 
 	.section-title {
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Roboto', sans-serif;
 		font-weight: 500;
 		font-size: 16px;
 		line-height: 24px;
@@ -213,7 +187,7 @@
 	}
 
 	.link-button {
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Roboto', sans-serif;
 		font-weight: 500;
 		font-size: 14px;
 		color: var(--content-accent-default, #009b3a);
@@ -237,7 +211,7 @@
 	}
 
 	.office-address {
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Roboto', sans-serif;
 		font-weight: 500;
 		font-size: 16px;
 		line-height: 24px;
@@ -248,7 +222,7 @@
 	.office-hours,
 	.office-break,
 	.office-phone {
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Roboto', sans-serif;
 		font-weight: 400;
 		font-size: 14px;
 		line-height: 20px;
@@ -257,7 +231,7 @@
 	}
 
 	.change-button {
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Roboto', sans-serif;
 		font-weight: 500;
 		font-size: 14px;
 		color: var(--content-accent-default, #009b3a);
@@ -274,7 +248,7 @@
 	}
 
 	.map-hint {
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Roboto', sans-serif;
 		font-weight: 400;
 		font-size: 12px;
 		line-height: 16px;
@@ -289,7 +263,7 @@
 	}
 
 	.delivery-note {
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Roboto', sans-serif;
 		font-weight: 400;
 		font-size: 14px;
 		line-height: 20px;
@@ -306,7 +280,7 @@
 	}
 
 	.footer-hint {
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Roboto', sans-serif;
 		font-weight: 400;
 		font-size: 12px;
 		line-height: 16px;

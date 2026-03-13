@@ -1,9 +1,9 @@
 <script lang="ts">
 	import Input from '$lib/components/Input.svelte';
-  import ArrowLeft from '$lib/icons/ArrowLeft.svelte';
-  import MaxCloseIcon from '$lib/icons/max/MaxCloseIcon.svelte';
-  import MaxOptionsIcon from '$lib/icons/max/MaxOptionsIcon.svelte';
-  import MaxVerifiedIcon from '$lib/icons/max/MaxVerifiedIcon.svelte';
+	import ArrowLeft from '$lib/icons/ArrowLeft.svelte';
+	import MaxCloseIcon from '$lib/icons/max/MaxCloseIcon.svelte';
+	import MaxOptionsIcon from '$lib/icons/max/MaxOptionsIcon.svelte';
+	import MaxVerifiedIcon from '$lib/icons/max/MaxVerifiedIcon.svelte';
 
 	// Form state
 	let surname = $state('');
@@ -70,8 +70,8 @@
 				</button>
 				<div class="title-center">
 					<p class="title-text">Карта жителя</p>
-					<MaxVerifiedIcon/>
-				</div> 
+					<MaxVerifiedIcon />
+				</div>
 				<button class="icon-button-small" style="background: transparent;" aria-label="More">
 					<MaxOptionsIcon />
 				</button>
@@ -133,28 +133,16 @@
 				<Input bind:value={name} label="Имя" />
 
 				<div class="patronymic-section">
-					<Input
-						bind:value={patronymic}
-						label="Отчество"
-						disabled={hasNoPatronymic}
-					/>
+					<Input bind:value={patronymic} label="Отчество" disabled={hasNoPatronymic} />
 					<label class="checkbox-label">
 						<input type="checkbox" class="checkbox" bind:checked={hasNoPatronymic} />
 						<span class="checkbox-text">Нет отчества по паспорту</span>
 					</label>
 				</div>
 
-				<Input
-					bind:value={birthDate}
-					label="Дата рождения"
-					iconRight={iconCalendar}
-				/>
+				<Input bind:value={birthDate} label="Дата рождения" iconRight={iconCalendar} />
 
-				<Input
-					bind:value={phoneNumber}
-					label="Номер телефона"
-					type="tel"
-				/>
+				<Input bind:value={phoneNumber} label="Номер телефона" type="tel" />
 			</div>
 
 			<!-- Divider -->
@@ -188,7 +176,7 @@
 <style>
 	:global(body) {
 		margin: 0;
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Roboto', sans-serif;
 		background: #f5f5f5;
 		height: 100vh;
 	}
@@ -233,7 +221,7 @@
 	}
 
 	.time {
-		font-family: 'SF Pro Text', sans-serif;
+		font-family: 'Roboto', sans-serif;
 		font-weight: 600;
 		font-size: 15px;
 		line-height: normal;
@@ -333,7 +321,7 @@
 	}
 
 	.title-text {
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Roboto', sans-serif;
 		font-weight: 500;
 		font-size: 16px;
 		line-height: 24px;
@@ -437,7 +425,7 @@
 	}
 
 	.stepper-title {
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Roboto', sans-serif;
 		font-weight: 500;
 		font-size: 24px;
 		line-height: 32px;
@@ -447,7 +435,7 @@
 	}
 
 	.stepper-counter {
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Roboto', sans-serif;
 		font-weight: 400;
 		font-size: 24px;
 		line-height: 32px;
@@ -474,7 +462,7 @@
 	}
 
 	.gosuslugi-text {
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Roboto', sans-serif;
 		font-weight: 400;
 		font-size: 18px;
 		line-height: 28px;
@@ -494,7 +482,7 @@
 		gap: 8px;
 		cursor: pointer;
 		padding: 8px 10px;
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Roboto', sans-serif;
 		font-weight: 500;
 		font-size: 18px;
 		line-height: 32px;
@@ -514,7 +502,7 @@
 	}
 
 	.section-title h2 {
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Roboto', sans-serif;
 		font-weight: 500;
 		font-size: 18px;
 		line-height: 28px;
@@ -562,7 +550,7 @@
 	}
 
 	.checkbox-text {
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Roboto', sans-serif;
 		font-weight: 400;
 		font-size: 16px;
 		line-height: 24px;
@@ -596,7 +584,7 @@
 		flex: 1;
 		height: 56px;
 		border-radius: 12px;
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Roboto', sans-serif;
 		font-weight: 400;
 		font-size: 16px;
 		line-height: 24px;

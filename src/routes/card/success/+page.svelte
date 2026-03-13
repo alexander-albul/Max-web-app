@@ -12,29 +12,58 @@
 		<div class="header-section">
 			<h1 class="title">Заявка отправлена</h1>
 			<p class="description">
-				В случае необходимости с вами свяжется сотрудник банка. Уточнить статус готовности карты вы можете в приложении Ак Барс Онлайн или из смс сообщения от банка.
+				В случае необходимости с вами свяжется сотрудник банка. Уточнить статус готовности карты вы
+				можете в приложении Ак Барс Онлайн или из смс сообщения от банка.
 			</p>
 		</div>
 
 		<div class="app-promo">
 			<div class="promo-content">
-				<p class="promo-text">
-					Скачайте приложение «Карта жителя РТ» и узнайте все преимущества!
-				</p>
+				<p class="promo-text">Скачайте приложение «Карта жителя РТ» и узнайте все преимущества!</p>
 
 				<div class="store-buttons">
 					<a href="#" class="store-button">
 						<svg width="136" height="40" viewBox="0 0 136 40" fill="none">
-							<rect width="136" height="40" rx="6" fill="#000000"/>
-							<text x="68" y="15" text-anchor="middle" fill="white" font-size="8" font-family="sans-serif">Загрузите в</text>
-							<text x="68" y="28" text-anchor="middle" fill="white" font-size="12" font-weight="600" font-family="sans-serif">App Store</text>
+							<rect width="136" height="40" rx="6" fill="#000000" />
+							<text
+								x="68"
+								y="15"
+								text-anchor="middle"
+								fill="white"
+								font-size="8"
+								font-family="sans-serif">Загрузите в</text
+							>
+							<text
+								x="68"
+								y="28"
+								text-anchor="middle"
+								fill="white"
+								font-size="12"
+								font-weight="600"
+								font-family="sans-serif">App Store</text
+							>
 						</svg>
 					</a>
 					<a href="#" class="store-button">
 						<svg width="136" height="40" viewBox="0 0 136 40" fill="none">
-							<rect width="136" height="40" rx="6" fill="#000000"/>
-							<text x="68" y="15" text-anchor="middle" fill="white" font-size="8" font-family="sans-serif">Доступно в</text>
-							<text x="68" y="28" text-anchor="middle" fill="white" font-size="12" font-weight="600" font-family="sans-serif">Google Play</text>
+							<rect width="136" height="40" rx="6" fill="#000000" />
+							<text
+								x="68"
+								y="15"
+								text-anchor="middle"
+								fill="white"
+								font-size="8"
+								font-family="sans-serif">Доступно в</text
+							>
+							<text
+								x="68"
+								y="28"
+								text-anchor="middle"
+								fill="white"
+								font-size="12"
+								font-weight="600"
+								font-family="sans-serif">Google Play</text
+							>
 						</svg>
 					</a>
 				</div>
@@ -71,9 +100,7 @@
 	</div>
 
 	<div class="footer">
-		<Button variant="primary" fullWidth onClick={() => goto('/')}>
-			На главную
-		</Button>
+		<Button variant="primary" fullWidth onClick={() => goto('/')}>На главную</Button>
 	</div>
 </div>
 
@@ -99,7 +126,7 @@
 	}
 
 	.title {
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Roboto', sans-serif;
 		font-weight: 600;
 		font-size: 28px;
 		line-height: 36px;
@@ -108,7 +135,7 @@
 	}
 
 	.description {
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Roboto', sans-serif;
 		font-weight: 400;
 		font-size: 14px;
 		line-height: 20px;
@@ -129,7 +156,7 @@
 	}
 
 	.promo-text {
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Roboto', sans-serif;
 		font-weight: 500;
 		font-size: 16px;
 		line-height: 24px;

@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import favicon from '$lib/assets/favicon.svg';
+	import '../app.css';
+	import '../index.css';
 
 	let { children } = $props();
 </script>
@@ -19,7 +21,10 @@
 		place-items: center;
 		position: relative;
 		z-index: 1;
-    	height: 100%;
+		height: 100%;
+		max-height: 100svh;
 		background: black;
+		overflow: auto;
+		overscroll-behavior: contain;
 	}
 </style>

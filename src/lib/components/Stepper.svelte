@@ -5,139 +5,119 @@
 	}
 
 	interface Props {
-		steps: Step[];
+		title?: string;
 		currentStep?: number;
+		totalSteps?: number;
+		steps?: Step[];
 		class?: string;
 	}
 
 	let {
-		steps = [],
+		title = 'Анкета на выпуск\nКарты жителя РТ',
 		currentStep = 1,
+		totalSteps,
+		steps = [],
 		class: className = ''
 	}: Props = $props();
+
+	// Calculate total steps from either totalSteps prop or steps array length
+	const total = $derived(totalSteps ?? steps.length ?? 4);
+
+	// Create array of step indices for iteration
+	const stepIndices = $derived(Array.from({ length: total }, (_, i) => i + 1));
 </script>
 
 <div class="stepper {className}">
-	<div class="steps">
-		{#each steps as step, index}
-			{@const stepNumber = index + 1}
+	<!-- Segmented progress bar -->
+	<div class="progress-bar">
+		{#each stepIndices as stepNumber}
 			{@const isCompleted = stepNumber < currentStep}
 			{@const isCurrent = stepNumber === currentStep}
-			{@const isPending = stepNumber > currentStep}
 
-			<div class="step" class:completed={isCompleted} class:current={isCurrent} class:pending={isPending}>
-				<div class="step-indicator">
-					{#if isCompleted}
-						<svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-							<path d="M13.3334 4L6.00008 11.3333L2.66675 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-						</svg>
-					{:else}
-						<span class="step-number">{stepNumber}</span>
-					{/if}
-				</div>
-				{#if index < steps.length - 1}
-					<div class="step-connector" class:completed={isCompleted}></div>
+			<div class="segment" class:completed={isCompleted} class:current={isCurrent}>
+				{#if isCurrent}
+					<div class="segment-progress"></div>
 				{/if}
 			</div>
 		{/each}
 	</div>
 
-	{#if steps[currentStep - 1]}
-		<div class="step-info">
-			<span class="step-label">{steps[currentStep - 1].label}</span>
-			{#if steps[currentStep - 1].description}
-				<span class="step-description">{steps[currentStep - 1].description}</span>
-			{/if}
+	<!-- Content below the bar -->
+	<div class="content">
+		<div class="title">
+			{#each title.split('\n') as line}
+				<span>{line}</span>
+			{/each}
 		</div>
-	{/if}
+		<div class="counter">{currentStep}/{total}</div>
+	</div>
 </div>
 
 <style>
 	.stepper {
 		display: flex;
 		flex-direction: column;
-		gap: 16px;
+		gap: 12px;
 	}
 
-	.steps {
+	.progress-bar {
 		display: flex;
-		align-items: center;
-	}
-
-	.step {
-		display: flex;
-		align-items: center;
-		flex: 1;
-	}
-
-	.step:last-child {
-		flex: 0;
-	}
-
-	.step-indicator {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 32px;
-		height: 32px;
-		border-radius: 50%;
-		font-family: 'Rubik', sans-serif;
-		font-weight: 500;
-		font-size: 14px;
-		transition: all 0.2s ease;
-		flex-shrink: 0;
-	}
-
-	.step.completed .step-indicator {
-		background: var(--background-accent-default, #009b3a);
-		color: var(--content-on-accent, #ffffff);
-	}
-
-	.step.current .step-indicator {
-		background: var(--background-accent-default, #009b3a);
-		color: var(--content-on-accent, #ffffff);
-	}
-
-	.step.pending .step-indicator {
-		background: var(--background-base-secondary, #f5f5f5);
-		color: var(--content-base-secondary, #6e6d6d);
-	}
-
-	.step-number {
-		line-height: 1;
-	}
-
-	.step-connector {
-		flex: 1;
-		height: 2px;
-		background: var(--background-base-tertiary, #e0e0e0);
-		margin: 0 8px;
-		transition: background 0.2s ease;
-	}
-
-	.step-connector.completed {
-		background: var(--background-accent-default, #009b3a);
-	}
-
-	.step-info {
-		display: flex;
-		flex-direction: column;
 		gap: 4px;
 	}
 
-	.step-label {
-		font-family: 'Rubik', sans-serif;
-		font-weight: 500;
-		font-size: 20px;
-		line-height: 28px;
-		color: var(--content-base-primary, #212121);
+	.segment {
+		flex: 1;
+		height: 4px;
+		border-radius: 2px;
+		background: var(--background-base-tertiary, #e0e0e0);
+		position: relative;
+		overflow: hidden;
 	}
 
-	.step-description {
-		font-family: 'Rubik', sans-serif;
+	.segment.completed {
+		background: var(--background-accent-default, #009b3a);
+	}
+
+	.segment.current {
+		background: var(--background-base-tertiary, #e0e0e0);
+	}
+
+	.segment-progress {
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 24px;
+		height: 100%;
+		background: var(--background-accent-default, #009b3a);
+		border-radius: 2px;
+	}
+
+	.content {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+	}
+
+	.title {
+		display: flex;
+		flex-direction: column;
+		color: var(--content-base-primary, #212121);
+
+		/* [Default]/Text/XL_strong */
+		font-family: Roboto;
+		font-size: 24px;
+		font-style: normal;
+		font-weight: 500;
+		line-height: 32px; /* 133.333% */
+	}
+
+	.counter {
+		/* [Default]/Text/XL */
+		font-family: Roboto;
+		font-size: 24px;
+		font-style: normal;
 		font-weight: 400;
-		font-size: 14px;
-		line-height: 20px;
+		line-height: 32px;
 		color: var(--content-base-secondary, #6e6d6d);
 	}
 </style>

@@ -88,11 +88,7 @@
 
 		<div class="content-box">
 			{#if label}
-				<label
-					class="label"
-					class:label-floating={isFloating}
-					for={label}
-				>
+				<label class="label" class:label-floating={isFloating} for={label}>
 					{label}
 					{#if required}
 						<span class="required">*</span>
@@ -198,7 +194,7 @@
 	}
 
 	.label {
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Roboto', sans-serif;
 		font-weight: 400;
 		font-size: 16px;
 		line-height: 24px;
@@ -224,7 +220,7 @@
 	}
 
 	.input-container.error .label {
-		color: var(--content-error, #e53935);
+		color: var(--content-base-secondary, #6e6d6d);
 	}
 
 	.required {
@@ -235,7 +231,7 @@
 		width: 100%;
 		border: none;
 		background: transparent;
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Roboto', sans-serif;
 		font-weight: 400;
 		font-size: 16px;
 		line-height: 24px;
@@ -290,7 +286,7 @@
 	}
 
 	.hint {
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Roboto', sans-serif;
 		font-weight: 400;
 		font-size: 12px;
 		line-height: 16px;
@@ -300,7 +296,7 @@
 	}
 
 	.error-message {
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Roboto', sans-serif;
 		font-weight: 400;
 		font-size: 12px;
 		line-height: 16px;

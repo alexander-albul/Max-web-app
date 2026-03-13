@@ -2,6 +2,7 @@
 	import { goto } from '$app/navigation';
 	import Stepper from '$lib/components/Stepper.svelte';
 	import Button from '$lib/components/Button.svelte';
+	import BackButton from '$lib/components/BackButton.svelte';
 
 	const steps = [
 		{ label: 'Оформление' },
@@ -16,7 +17,7 @@
 	let canResend = $state(false);
 	let inputs: HTMLInputElement[] = [];
 
-	const isCodeComplete = $derived(code.every(digit => digit !== ''));
+	const isCodeComplete = $derived(code.every((digit) => digit !== ''));
 
 	$effect(() => {
 		if (timer > 0 && !canResend) {
@@ -76,13 +77,7 @@
 </svelte:head>
 
 <div class="page">
-	<div class="back-button">
-		<button type="button" class="back-link" onclick={() => history.back()}>
-			<svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-				<path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-			</svg>
-		</button>
-	</div>
+	<BackButton onclick={() => history.back()} />
 
 	<Stepper {steps} currentStep={3} />
 
@@ -139,23 +134,6 @@
 		gap: 24px;
 	}
 
-	.back-button {
-		margin-bottom: -12px;
-	}
-
-	.back-link {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 24px;
-		height: 24px;
-		border: none;
-		background: transparent;
-		cursor: pointer;
-		padding: 0;
-		color: var(--content-base-primary, #212121);
-	}
-
 	.content {
 		display: flex;
 		flex-direction: column;
@@ -175,7 +153,7 @@
 	}
 
 	.code-title {
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Roboto', sans-serif;
 		font-weight: 600;
 		font-size: 24px;
 		line-height: 32px;
@@ -184,7 +162,7 @@
 	}
 
 	.code-subtitle {
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Roboto', sans-serif;
 		font-weight: 400;
 		font-size: 14px;
 		line-height: 20px;
@@ -204,7 +182,7 @@
 		border: 2px solid var(--border-base-main, #c8c6c6);
 		border-radius: 12px;
 		background: var(--background-base-primary, #ffffff);
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Roboto', sans-serif;
 		font-weight: 600;
 		font-size: 24px;
 		text-align: center;
@@ -227,7 +205,7 @@
 	}
 
 	.resend-timer {
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Roboto', sans-serif;
 		font-weight: 400;
 		font-size: 14px;
 		line-height: 20px;
@@ -236,7 +214,7 @@
 	}
 
 	.resend-button {
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Roboto', sans-serif;
 		font-weight: 500;
 		font-size: 14px;
 		line-height: 20px;

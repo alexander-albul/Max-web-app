@@ -184,7 +184,7 @@
 
 	.content {
 		padding: 0 var(--spacing-3x, 12px);
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Roboto', sans-serif;
 		font-weight: 400;
 		font-size: 14px;
 		line-height: 20px;

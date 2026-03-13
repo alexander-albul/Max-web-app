@@ -36,8 +36,18 @@
 
 	const DAYS_OF_WEEK = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
 	const MONTHS = [
-		'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
-		'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'
+		'Январь',
+		'Февраль',
+		'Март',
+		'Апрель',
+		'Май',
+		'Июнь',
+		'Июль',
+		'Август',
+		'Сентябрь',
+		'Октябрь',
+		'Ноябрь',
+		'Декабрь'
 	];
 
 	const hasError = $derived(!!error);
@@ -45,7 +55,9 @@
 	const isFloating = $derived(isFocused || hasValue || isOpen);
 
 	const displayValue = $derived(
-		value ? value.toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' }) : ''
+		value
+			? value.toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' })
+			: ''
 	);
 
 	const calendarDays = $derived.by(() => {
@@ -54,7 +66,13 @@
 		const firstDay = new Date(year, month, 1);
 		const lastDay = new Date(year, month + 1, 0);
 		const startPadding = (firstDay.getDay() + 6) % 7;
-		const days: Array<{ date: Date; isCurrentMonth: boolean; isToday: boolean; isSelected: boolean; isDisabled: boolean }> = [];
+		const days: Array<{
+			date: Date;
+			isCurrentMonth: boolean;
+			isToday: boolean;
+			isSelected: boolean;
+			isDisabled: boolean;
+		}> = [];
 
 		// Previous month days
 		for (let i = startPadding - 1; i >= 0; i--) {
@@ -176,7 +194,7 @@
 				</span>
 			{/if}
 			<span class="value" class:has-label={!!label} class:placeholder={!value}>
-				{value ? displayValue : (label ? '' : placeholder)}
+				{value ? displayValue : label ? '' : placeholder}
 			</span>
 		</div>
 
@@ -184,15 +202,45 @@
 			{#if value && !disabled}
 				<button type="button" class="clear-button" onclick={handleClear} aria-label="Очистить">
 					<svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-						<path d="M12 4L4 12M4 4L12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+						<path
+							d="M12 4L4 12M4 4L12 12"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+						/>
 					</svg>
 				</button>
 			{/if}
 			<svg class="calendar-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
-				<path d="M19 4H5C3.89543 4 3 4.89543 3 6V20C3 21.1046 3.89543 22 5 22H19C20.1046 22 21 21.1046 21 20V6C21 4.89543 20.1046 4 19 4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-				<path d="M16 2V6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-				<path d="M8 2V6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-				<path d="M3 10H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+				<path
+					d="M19 4H5C3.89543 4 3 4.89543 3 6V20C3 21.1046 3.89543 22 5 22H19C20.1046 22 21 21.1046 21 20V6C21 4.89543 20.1046 4 19 4Z"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+				/>
+				<path
+					d="M16 2V6"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+				/>
+				<path
+					d="M8 2V6"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+				/>
+				<path
+					d="M3 10H21"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+				/>
 			</svg>
 		</div>
 	</button>
@@ -200,17 +248,40 @@
 	{#if isOpen}
 		<div class="calendar-dropdown">
 			<div class="calendar-header">
-				<button type="button" class="nav-button" onclick={handlePrevMonth} aria-label="Предыдущий месяц">
+				<button
+					type="button"
+					class="nav-button"
+					onclick={handlePrevMonth}
+					aria-label="Предыдущий месяц"
+				>
 					<svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-						<path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+						<path
+							d="M12.5 15L7.5 10L12.5 5"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+						/>
 					</svg>
 				</button>
 				<span class="month-year">
-					{MONTHS[currentMonth.getMonth()]} {currentMonth.getFullYear()}
+					{MONTHS[currentMonth.getMonth()]}
+					{currentMonth.getFullYear()}
 				</span>
-				<button type="button" class="nav-button" onclick={handleNextMonth} aria-label="Следующий месяц">
+				<button
+					type="button"
+					class="nav-button"
+					onclick={handleNextMonth}
+					aria-label="Следующий месяц"
+				>
 					<svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-						<path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+						<path
+							d="M7.5 15L12.5 10L7.5 5"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+						/>
 					</svg>
 				</button>
 			</div>
@@ -307,7 +378,7 @@
 	}
 
 	.label {
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Roboto', sans-serif;
 		font-weight: 400;
 		font-size: 16px;
 		line-height: 24px;
@@ -332,7 +403,7 @@
 	}
 
 	.error .label {
-		color: var(--content-error, #e53935);
+		color: var(--content-base-secondary, #6e6d6d);
 	}
 
 	.required {
@@ -340,7 +411,7 @@
 	}
 
 	.value {
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Roboto', sans-serif;
 		font-weight: 400;
 		font-size: 16px;
 		line-height: 24px;
@@ -422,7 +493,7 @@
 	}
 
 	.month-year {
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Roboto', sans-serif;
 		font-weight: 500;
 		font-size: 16px;
 		line-height: 24px;
@@ -442,7 +513,7 @@
 	}
 
 	.weekday {
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Roboto', sans-serif;
 		font-weight: 500;
 		font-size: 12px;
 		line-height: 16px;
@@ -467,7 +538,7 @@
 		background: transparent;
 		cursor: pointer;
 		border-radius: var(--border-radius-m, 8px);
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Roboto', sans-serif;
 		font-weight: 400;
 		font-size: 14px;
 		line-height: 20px;
@@ -499,7 +570,7 @@
 	}
 
 	.hint {
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Roboto', sans-serif;
 		font-weight: 400;
 		font-size: 12px;
 		line-height: 16px;
@@ -509,7 +580,7 @@
 	}
 
 	.error-message {
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Roboto', sans-serif;
 		font-weight: 400;
 		font-size: 12px;
 		line-height: 16px;

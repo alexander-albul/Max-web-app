@@ -4,6 +4,9 @@
 	import SectionMessage from '$lib/components/SectionMessage.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import Divider from '$lib/components/Divider.svelte';
+	import BackButton from '$lib/components/BackButton.svelte';
+	import CityModal from '$lib/components/CityModal.svelte';
+	import { tatarstanCities } from '$lib/data/tatarstan-cities';
 
 	const steps = [
 		{ label: 'Оформление', description: 'Выберите дизайн карты и загрузите фото' },
@@ -14,6 +17,11 @@
 	];
 
 	let selectedDesign = $state(0);
+	let selectedCity = $state<string | null>(null);
+	let isCityModalOpen = $state(false);
+	let submitted = $state(false);
+
+	const cityError = $derived(submitted && !selectedCity ? 'Обязательное поле' : '');
 
 	const cardDesigns = [
 		{ id: 1, name: 'Классический', image: '/cards/adult-1.jpg' },
@@ -22,7 +30,27 @@
 	];
 
 	function handleNext() {
+		submitted = true;
+		if (!selectedCity) {
+			setTimeout(() => {
+				const firstError = document.querySelector('.city-button-error, .field-error');
+				firstError?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+			}, 0);
+			return;
+		}
 		goto('/card/step2');
+	}
+
+	function handleCitySelect(city: string) {
+		selectedCity = city;
+	}
+
+	function openCityModal() {
+		isCityModalOpen = true;
+	}
+
+	function closeCityModal() {
+		isCityModalOpen = false;
 	}
 </script>
 
@@ -31,35 +59,54 @@
 </svelte:head>
 
 <div class="page">
-	<div class="back-button">
-		<button type="button" class="back-link" onclick={() => {}}>
-			<svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-				<path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-			</svg>
-		</button>
-	</div>
+	<!-- <BackButton /> -->
 
 	<Stepper {steps} currentStep={1} />
 
 	<div class="content">
-		<SectionMessage type="info" title="Для заполнения заявки приготовьте:">
-ка
+		<SectionMessage type="info" showIcon={false}>
+			<p class="font-medium">Для заполнения заявки приготовьте:</p>
+			<ul>
+				<li>свой паспорт</li>
+				<li>свидетельство о рождении ребёнка</li>
+				<li>паспорт ребёнка, если ребёнок старше 14 лет</li>
+				<li>номер телефона ребёнка</li>
+			</ul>
 		</SectionMessage>
+
+		<Divider spacing="m" />
 
 		<div class="section">
 			<div class="section-header">
-				<span class="section-title">Ваше фото</span>
+				<span class="section-title">Город получения карты</span>
+				<span class="section-subtitle">Выберите город, в котором вы хотите получить карту</span>
 			</div>
-			<Button variant="secondary" fullWidth>
-				<span class="upload-content">
-					<svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-						<path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-						<polyline points="17,8 12,3 7,8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-						<line x1="12" y1="3" x2="12" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+			<div class="field-button-wrapper">
+				<Button variant={'secondary'} size="l" fullWidth onClick={openCityModal} class="city-selector-button{cityError ? ' city-button-error' : ''}">
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="location-icon">
+						<path
+							d="M12 2C16.3719 2 19.916 5.45414 19.916 9.71484C19.9159 14.8532 15.3631 19.5697 13.1631 21.5488C12.4929 22.1517 11.5071 22.1517 10.8369 21.5488C8.63685 19.5696 4.08409 14.8532 4.08398 9.71484C4.08398 5.45416 7.62815 2.00004 12 2ZM12 3.5C8.41993 3.50004 5.58398 6.31878 5.58398 9.71484C5.58404 11.8548 6.5413 14.0198 7.87402 15.9707C9.19473 17.904 10.789 19.4874 11.8408 20.4336C11.8987 20.4857 11.9543 20.501 12 20.501C12.0457 20.501 12.1013 20.4857 12.1592 20.4336C13.211 19.4874 14.8053 17.904 16.126 15.9707C17.4587 14.0198 18.416 11.8548 18.416 9.71484C18.416 6.31876 15.5801 3.5 12 3.5ZM12 6C14.2091 6 16 7.79086 16 10C16 12.2091 14.2091 14 12 14C9.79086 14 8 12.2091 8 10C8 7.79086 9.79086 6 12 6ZM12 7.5C10.6193 7.5 9.5 8.61929 9.5 10C9.5 11.3807 10.6193 12.5 12 12.5C13.3807 12.5 14.5 11.3807 14.5 10C14.5 8.61929 13.3807 7.5 12 7.5Z"
+							fill={"#009b3a"}
+						/>
 					</svg>
-					Загрузить фото
-				</span>
-			</Button>
+					<span class="city-button-text">
+						{selectedCity || 'Выбрать город'}
+					</span>
+					<svg width="20" height="20" viewBox="0 0 20 20" fill="none" class="chevron-icon">
+						<path
+							d="M5 7.5L10 12.5L15 7.5"
+							stroke="currentColor"
+							stroke-width="1.5"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+						/>
+					</svg>
+				</Button>
+				{#if cityError}
+					<p class="field-error">{cityError}</p>
+				{/if}
+			</div>
 		</div>
 
 		<Divider spacing="m" />
@@ -67,11 +114,15 @@
 		<div class="section">
 			<div class="section-header">
 				<span class="section-title">Выберите дизайн карты</span>
-				<span class="section-subtitle">Вы можете выбрать понравившийся дизайн</span>
+				<span class="section-subtitle">Будет применен при наличии заготовок</span>
 			</div>
 
 			<div class="photo-preview">
-				<img class="card-preview-image" src={cardDesigns[selectedDesign].image} alt={cardDesigns[selectedDesign].name} />
+				<img
+					class="card-preview-image"
+					src={cardDesigns[selectedDesign].image}
+					alt={cardDesigns[selectedDesign].name}
+				/>
 			</div>
 
 			<div class="designs-row">
@@ -80,15 +131,23 @@
 						type="button"
 						class="design-card"
 						class:selected={selectedDesign === index}
-						onclick={() => selectedDesign = index}
+						onclick={() => (selectedDesign = index)}
 					>
-						<div class="design-preview" style="background-image: url({design.image}); background-size: cover; background-position: center;">
-						</div>
+						<div
+							class="design-preview"
+							style="background-image: url({design.image}); background-size: cover; background-position: center;"
+						></div>
 						{#if selectedDesign === index}
 							<div class="check-mark">
 								<svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-									<circle cx="8" cy="8" r="8" fill="#009B3A"/>
-									<path d="M5 8L7 10L11 6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+									<circle cx="8" cy="8" r="8" fill="#009B3A" />
+									<path
+										d="M5 8L7 10L11 6"
+										stroke="white"
+										stroke-width="1.5"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									/>
 								</svg>
 							</div>
 						{/if}
@@ -99,35 +158,26 @@
 	</div>
 
 	<div class="footer">
-		<Button variant="primary" fullWidth onClick={handleNext}>
-			Продолжить
-		</Button>
+		<Button variant="primary" fullWidth onClick={handleNext}>Продолжить</Button>
 	</div>
+
+	<CityModal
+	bind:open={isCityModalOpen}
+	cities={tatarstanCities}
+	onSelect={handleCitySelect}
+	onClose={closeCityModal}
+/>
 </div>
+
+
 
 <style>
 	.page {
+		position: relative;
 		display: flex;
 		flex-direction: column;
 		flex: 1;
 		gap: 24px;
-	}
-
-	.back-button {
-		margin-bottom: -12px;
-	}
-
-	.back-link {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 24px;
-		height: 24px;
-		border: none;
-		background: transparent;
-		cursor: pointer;
-		padding: 0;
-		color: var(--content-base-primary, #212121);
 	}
 
 	.content {
@@ -149,8 +199,13 @@
 		gap: 4px;
 	}
 
+	ul {
+		padding-left: 20px;
+		margin: 0;
+	}
+
 	.section-title {
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Roboto', sans-serif;
 		font-weight: 500;
 		font-size: 16px;
 		line-height: 24px;
@@ -158,7 +213,7 @@
 	}
 
 	.section-subtitle {
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Roboto', sans-serif;
 		font-weight: 400;
 		font-size: 14px;
 		line-height: 20px;
@@ -211,7 +266,7 @@
 		flex-shrink: 0;
 		width: 122px;
 		height: 77px;
-		border-radius: 20px;
+		border-radius: 10px;
 		border: 2px solid transparent;
 		overflow: hidden;
 		cursor: pointer;
@@ -243,12 +298,51 @@
 		justify-content: center;
 		gap: 4px;
 		color: var(--content-base-secondary, #6e6d6d);
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Roboto', sans-serif;
 		font-size: 12px;
 	}
 
 	.footer {
 		margin-top: auto;
 		padding-top: 16px;
+	}
+
+	.field-button-wrapper {
+		display: flex;
+		flex-direction: column;
+	}
+
+	:global(.city-selector-button .label) {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		width: 100%;
+	}
+
+	:global(.city-button-error) {
+		border-color: var(--border-error, #e53935) !important;
+	}
+
+	.field-error {
+		font-family: 'Roboto', sans-serif;
+		font-weight: 400;
+		font-size: 12px;
+		line-height: 16px;
+		color: var(--content-error, #e53935);
+		margin: 4px 0 0 0;
+		padding: 0 20px;
+	}
+
+	.location-icon {
+		flex-shrink: 0;
+	}
+
+	.city-button-text {
+		flex: 1;
+		text-align: left;
+	}
+
+	.chevron-icon {
+		flex-shrink: 0;
 	}
 </style>

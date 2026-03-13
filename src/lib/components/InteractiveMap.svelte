@@ -7,8 +7,8 @@
 		workHours: string;
 		breakTime?: string;
 		phone: string;
-		x: number;  // percent position
-		y: number;  // percent position
+		x: number; // percent position
+		y: number; // percent position
 	}
 
 	interface Props {
@@ -55,7 +55,10 @@
 	}
 
 	function handlePointerDown(e: PointerEvent) {
-		if ((e.target as HTMLElement).closest('.map-pin') || (e.target as HTMLElement).closest('.pin-popup')) {
+		if (
+			(e.target as HTMLElement).closest('.map-pin') ||
+			(e.target as HTMLElement).closest('.pin-popup')
+		) {
 			return;
 		}
 		isDragging = true;
@@ -117,7 +120,10 @@
 	}
 
 	function handleMapClick(e: MouseEvent) {
-		if (!(e.target as HTMLElement).closest('.map-pin') && !(e.target as HTMLElement).closest('.pin-popup')) {
+		if (
+			!(e.target as HTMLElement).closest('.map-pin') &&
+			!(e.target as HTMLElement).closest('.pin-popup')
+		) {
 			activePin = null;
 		}
 	}
@@ -175,29 +181,29 @@
 			<svg class="map-svg" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
 				<defs>
 					<pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-						<path d="M 40 0 L 0 0 0 40" fill="none" stroke="#e0e0e0" stroke-width="0.5"/>
+						<path d="M 40 0 L 0 0 0 40" fill="none" stroke="#e0e0e0" stroke-width="0.5" />
 					</pattern>
 				</defs>
-				<rect width="100%" height="100%" fill="#f0f4f0"/>
-				<rect width="100%" height="100%" fill="url(#grid)"/>
+				<rect width="100%" height="100%" fill="#f0f4f0" />
+				<rect width="100%" height="100%" fill="url(#grid)" />
 
 				<!-- Roads -->
-				<path d="M 0 150 L 400 150" stroke="#ffffff" stroke-width="8"/>
-				<path d="M 200 0 L 200 300" stroke="#ffffff" stroke-width="8"/>
-				<path d="M 50 50 L 350 250" stroke="#ffffff" stroke-width="6"/>
-				<path d="M 50 250 L 350 50" stroke="#ffffff" stroke-width="6"/>
+				<path d="M 0 150 L 400 150" stroke="#ffffff" stroke-width="8" />
+				<path d="M 200 0 L 200 300" stroke="#ffffff" stroke-width="8" />
+				<path d="M 50 50 L 350 250" stroke="#ffffff" stroke-width="6" />
+				<path d="M 50 250 L 350 50" stroke="#ffffff" stroke-width="6" />
 
 				<!-- Buildings -->
-				<rect x="60" y="60" width="40" height="30" fill="#d0d0d0" rx="2"/>
-				<rect x="140" y="40" width="50" height="40" fill="#d0d0d0" rx="2"/>
-				<rect x="260" y="70" width="45" height="35" fill="#d0d0d0" rx="2"/>
-				<rect x="80" y="180" width="60" height="45" fill="#d0d0d0" rx="2"/>
-				<rect x="200" y="200" width="55" height="40" fill="#d0d0d0" rx="2"/>
-				<rect x="300" y="180" width="50" height="50" fill="#d0d0d0" rx="2"/>
+				<rect x="60" y="60" width="40" height="30" fill="#d0d0d0" rx="2" />
+				<rect x="140" y="40" width="50" height="40" fill="#d0d0d0" rx="2" />
+				<rect x="260" y="70" width="45" height="35" fill="#d0d0d0" rx="2" />
+				<rect x="80" y="180" width="60" height="45" fill="#d0d0d0" rx="2" />
+				<rect x="200" y="200" width="55" height="40" fill="#d0d0d0" rx="2" />
+				<rect x="300" y="180" width="50" height="50" fill="#d0d0d0" rx="2" />
 
 				<!-- Parks -->
-				<ellipse cx="320" cy="80" rx="30" ry="25" fill="#c8e6c9"/>
-				<ellipse cx="100" cy="240" rx="35" ry="30" fill="#c8e6c9"/>
+				<ellipse cx="320" cy="80" rx="30" ry="25" fill="#c8e6c9" />
+				<ellipse cx="100" cy="240" rx="35" ry="30" fill="#c8e6c9" />
 			</svg>
 		</div>
 
@@ -213,8 +219,11 @@
 				aria-label={office.address}
 			>
 				<svg width="30" height="36" viewBox="0 0 30 36" fill="none">
-					<path d="M15 0C6.72 0 0 6.72 0 15C0 26.25 15 36 15 36C15 36 30 26.25 30 15C30 6.72 23.28 0 15 0Z" fill="currentColor"/>
-					<circle cx="15" cy="13" r="6" fill="white"/>
+					<path
+						d="M15 0C6.72 0 0 6.72 0 15C0 26.25 15 36 15 36C15 36 30 26.25 30 15C30 6.72 23.28 0 15 0Z"
+						fill="currentColor"
+					/>
+					<circle cx="15" cy="13" r="6" fill="white" />
 				</svg>
 			</button>
 		{/each}
@@ -222,10 +231,7 @@
 
 	<!-- Pin Popup -->
 	{#if activePin}
-		<div
-			class="pin-popup"
-			style="left: {popupPosition.x}px; top: {popupPosition.y}px"
-		>
+		<div class="pin-popup" style="left: {popupPosition.x}px; top: {popupPosition.y}px">
 			<div class="popup-content">
 				<p class="popup-address">{activePin.address}</p>
 				<p class="popup-hours">{activePin.workHours}</p>
@@ -244,12 +250,12 @@
 	<div class="zoom-controls">
 		<button type="button" class="zoom-button" onclick={handleZoomIn} aria-label="Приблизить">
 			<svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-				<path d="M10 4V16M4 10H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+				<path d="M10 4V16M4 10H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
 			</svg>
 		</button>
 		<button type="button" class="zoom-button" onclick={handleZoomOut} aria-label="Отдалить">
 			<svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-				<path d="M4 10H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+				<path d="M4 10H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
 			</svg>
 		</button>
 	</div>
@@ -297,7 +303,9 @@
 		padding: 0;
 		cursor: pointer;
 		color: var(--content-accent-default, #009b3a);
-		transition: transform 0.2s ease, color 0.2s ease;
+		transition:
+			transform 0.2s ease,
+			color 0.2s ease;
 		z-index: 10;
 	}
 
@@ -351,7 +359,7 @@
 	}
 
 	.popup-address {
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Roboto', sans-serif;
 		font-weight: 500;
 		font-size: 14px;
 		line-height: 20px;
@@ -361,7 +369,7 @@
 
 	.popup-hours,
 	.popup-break {
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Roboto', sans-serif;
 		font-weight: 400;
 		font-size: 12px;
 		line-height: 16px;
@@ -370,7 +378,7 @@
 	}
 
 	.popup-phone {
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Roboto', sans-serif;
 		font-weight: 400;
 		font-size: 12px;
 		line-height: 16px;
@@ -385,7 +393,7 @@
 		color: var(--content-on-accent, #ffffff);
 		border: none;
 		border-radius: 8px;
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Roboto', sans-serif;
 		font-weight: 500;
 		font-size: 14px;
 		cursor: pointer;

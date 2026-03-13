@@ -48,13 +48,7 @@
 	class:size-m={size === 'm'}
 >
 	<span class="checkbox-container">
-		<input
-			type="checkbox"
-			class="checkbox-input"
-			{checked}
-			{disabled}
-			onchange={handleChange}
-		/>
+		<input type="checkbox" class="checkbox-input" {checked} {disabled} onchange={handleChange} />
 		<span
 			class="checkbox-box"
 			class:checked
@@ -77,12 +71,7 @@
 			{/if}
 			{#if indeterminate}
 				<svg class="checkbox-icon" viewBox="0 0 16 16" fill="none">
-					<path
-						d="M3 8H13"
-						stroke="currentColor"
-						stroke-width="2"
-						stroke-linecap="round"
-					/>
+					<path d="M3 8H13" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
 				</svg>
 			{/if}
 		</span>
@@ -193,7 +182,7 @@
 	}
 
 	.checkbox-label {
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Roboto', sans-serif;
 		font-weight: 400;
 		font-size: 16px;
 		line-height: 24px;
@@ -206,7 +195,7 @@
 	}
 
 	.checkbox-description {
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Roboto', sans-serif;
 		font-weight: 400;
 		font-size: 14px;
 		line-height: 20px;

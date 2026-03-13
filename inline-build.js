@@ -43,7 +43,7 @@ html = html.replace(/<script([^>]*?)src="([^"]+)"([^>]*?)><\/script>/g, (match, 
 html = html.replace(
 	/Promise\.all\(\[([\s\S]*?)\]\)\.then\(([\s\S]*?)\);/g,
 	(match, imports, handler) => {
-		const paths = [...imports.matchAll(/import\("([^"]+)"\)/g)].map(m => m[1]);
+		const paths = [...imports.matchAll(/import\("([^"]+)"\)/g)].map((m) => m[1]);
 
 		// Gather all transitive JS files referenced via import()
 		const visited = new Set();

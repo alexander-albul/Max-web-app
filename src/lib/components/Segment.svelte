@@ -122,7 +122,7 @@
 		border: none;
 		background: transparent;
 		cursor: pointer;
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Roboto', sans-serif;
 		font-weight: 500;
 		color: var(--content-base-secondary, #6e6d6d);
 		transition: color 0.2s ease;

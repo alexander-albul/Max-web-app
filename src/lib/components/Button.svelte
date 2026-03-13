@@ -127,7 +127,7 @@
 		gap: var(--spacing-2x, 8px);
 		border: none;
 		border-radius: var(--border-radius-l, 12px);
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Roboto', sans-serif;
 		font-weight: 500;
 		cursor: pointer;
 		text-decoration: none;
@@ -192,16 +192,17 @@
 
 	/* Secondary variant */
 	.button.variant-secondary {
-		background: var(--background-base-secondary, #f5f5f5);
-		color: var(--content-base-primary, #212121);
+		background: unset;
+		border: 1px solid var(--border-accent-default, #009b3a);
+		color: var(--content-accent-default, #009b3a);
 	}
 
 	.button.variant-secondary:hover:not(.disabled) {
-		background: var(--background-base-tertiary, #ebebeb);
+		background: var(--background-accent-subtle, rgba(0, 155, 58, 0.08));
 	}
 
 	.button.variant-secondary:active:not(.disabled) {
-		background: var(--background-base-quaternary, #e0e0e0);
+		background: var(--background-accent-subtle-pressed, rgba(0, 155, 58, 0.16));
 	}
 
 	/* Ghost variant */
