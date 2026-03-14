@@ -168,6 +168,7 @@
 	.office-section {
 		display: flex;
 		flex-direction: column;
+		align-items: start;
 		gap: 12px;
 	}
 

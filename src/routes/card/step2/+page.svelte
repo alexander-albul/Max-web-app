@@ -47,6 +47,8 @@
 		phone: submitted && !phone ? 'Обязательное поле' : ''
 	});
 
+	const agreeError = $derived(submitted && !agreePersonalData ? 'Необходимо согласие на обработку персональных данных' : '');
+
 	const gosuslugiData = {
 		lastName: 'Иванов',
 		firstName: 'Иван',
@@ -90,7 +92,7 @@
 			goto('/card/step3');
 		} else {
 			setTimeout(() => {
-				const firstError = document.querySelector('.input-container.error, .error-message');
+				const firstError = document.querySelector('.input-container.error, .error-message, .agree-error');
 				firstError?.scrollIntoView({ behavior: 'smooth', block: 'center' });
 			}, 0);
 		}
@@ -194,11 +196,14 @@
 		<!-- Agreements -->
 		<div class="agreements">
 			<div class="agreement-item">
-				<Checkbox bind:checked={agreePersonalData} />
+				<Checkbox bind:checked={agreePersonalData} error={!!agreeError} />
 				<p class="agreement-text">
 					Я согласен(а) на <a href="#" class="link-green">обработку персональных данных</a>
 				</p>
 			</div>
+			{#if agreeError}
+				<p class="agree-error">{agreeError}</p>
+			{/if}
 			<div class="agreement-item no-checkbox">
 				<div class="checkbox-spacer"></div>
 				<p class="agreement-text">
@@ -333,6 +338,14 @@
 		display: flex;
 		flex-direction: column;
 		gap: 8px;
+	}
+
+	.agree-error {
+		font-family: 'Roboto', sans-serif;
+		font-size: 12px;
+		line-height: 16px;
+		color: var(--border-error, #e53935);
+		margin: 0;
 	}
 
 	.agreement-item {

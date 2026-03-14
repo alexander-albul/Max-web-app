@@ -2,7 +2,7 @@
 	import StatusBar from '$lib/components/StatusBar.svelte';
 	import TitleBar from '$lib/components/TitleBar.svelte';
 	import { ScrollArea } from '$lib/components/ui/scroll-area';
-	import { afterNavigate } from '$app/navigation';
+	import { afterNavigate, goto } from '$app/navigation';
 	import { tick } from 'svelte';
 
 	let { children } = $props();
@@ -23,7 +23,7 @@
 <div class="card-layout">
 	<header class="header">
 		<StatusBar>
-			<TitleBar />
+			<TitleBar onBack={() => goto('/', { replaceState: true })} />
 		</StatusBar>
 	</header>
 

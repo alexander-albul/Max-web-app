@@ -49,6 +49,14 @@
 		{ value: 'passport_foreign', label: 'Иностранный паспорт' }
 	];
 
+	const autofill = {
+		series: '8514',
+		number: '112233',
+		issueDate: new Date(2022, 3, 20),
+		departmentCode: '165-002',
+		birthPlace: 'Казань, Республика Татарстан, Россия'
+	};
+
 	// Тип документа (заблокирован по дизайну, только «Паспорт гражданина РФ»)
 	let documentType = $state('passport_rf');
 	let isDocTypeOpen = $state(false);
@@ -191,13 +199,13 @@
 					{/if}
 				</div>
 
-				<Input bind:value={series} label="Серия" size="l" error={errors.series} />
+				<Input bind:value={series} label="Серия" size="l" error={errors.series} onclick={() => { if (!series) series = autofill.series; }} />
 
-				<Input bind:value={number} label="Номер" size="l" error={errors.number} />
+				<Input bind:value={number} label="Номер" size="l" error={errors.number} onclick={() => { if (!number) number = autofill.number; }} />
 
-				<DatePicker bind:value={issueDate} label="Дата выдачи" size="l" maxDate={new Date()} error={errors.issueDate} />
+				<DatePicker bind:value={issueDate} label="Дата выдачи" size="l" maxDate={new Date()} error={errors.issueDate} onclick={() => { if (!issueDate) issueDate = autofill.issueDate; }} />
 
-				<Input bind:value={departmentCode} label="Код подразделения" size="l" error={errors.departmentCode} />
+				<Input bind:value={departmentCode} label="Код подразделения" size="l" error={errors.departmentCode} onclick={() => { if (!departmentCode) departmentCode = autofill.departmentCode; }} />
 
 				<div class="field-button-wrapper">
 					<Button
@@ -222,7 +230,7 @@
 					{/if}
 				</div>
 
-				<Input bind:value={birthPlace} label="Место рождения" size="l" error={errors.birthPlace} />
+				<Input bind:value={birthPlace} label="Место рождения" size="l" error={errors.birthPlace} onclick={() => { if (!birthPlace) birthPlace = autofill.birthPlace; }} />
 			</div>
 		</div>
 

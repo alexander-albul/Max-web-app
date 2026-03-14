@@ -12,7 +12,7 @@
 	<div class="screen">
 		<header class="header">
 			<StatusBar>
-				<TitleBar onBack={() => goto('/')} />
+				<TitleBar onBack={() => goto('/', { replaceState: true })} />
 			</StatusBar>
 		</header>
 

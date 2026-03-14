@@ -125,6 +125,8 @@
 		phone: submitted && !childPhone ? 'Обязательное поле' : ''
 	});
 
+	const agreeError = $derived(submitted && !agreePersonalData ? 'Необходимо согласие на обработку персональных данных' : '');
+
 	function handleGosuslugi() {
 		// Заполняем данные родителя
 		parentLastName = parentFromGosuslugi.lastName;
@@ -180,7 +182,7 @@
 			goto('/child-card/step3');
 		} else {
 			setTimeout(() => {
-				const firstError = document.querySelector('.input-container.error, .error-message');
+				const firstError = document.querySelector('.input-container.error, .error-message, .agree-error');
 				firstError?.scrollIntoView({ behavior: 'smooth', block: 'center' });
 			}, 0);
 		}
@@ -264,12 +266,12 @@
 			<h3 class="section-title">Данные родителя</h3>
 
 			<div class="form-fields">
-				<Input bind:value={parentLastName} label="Фамилия" required error={parentErrors.lastName} />
+				<Input bind:value={parentLastName} label="Фамилия" required error={parentErrors.lastName} onclick={() => { if (!parentLastName) parentLastName = parentFromGosuslugi.lastName; }} />
 
-				<Input bind:value={parentFirstName} label="Имя" required error={parentErrors.firstName} />
+				<Input bind:value={parentFirstName} label="Имя" required error={parentErrors.firstName} onclick={() => { if (!parentFirstName) parentFirstName = parentFromGosuslugi.firstName; }} />
 
 				<div class="field-with-checkbox">
-					<Input bind:value={parentMiddleName} label="Отчество" disabled={parentNoMiddleName} error={parentErrors.middleName} />
+					<Input bind:value={parentMiddleName} label="Отчество" disabled={parentNoMiddleName} error={parentErrors.middleName} onclick={() => { if (!parentMiddleName && !parentNoMiddleName) parentMiddleName = parentFromGosuslugi.middleName; }} />
 					<Checkbox bind:checked={parentNoMiddleName} label="Нет отчества по паспорту" size="s" />
 				</div>
 
@@ -278,9 +280,9 @@
 					<Segment options={parentGenderOptions} bind:value={parentGender} fullWidth />
 				</div>
 
-				<DatePicker bind:value={parentBirthDate} label="Дата рождения" required maxDate={new Date()} error={parentErrors.birthDate} />
+				<DatePicker bind:value={parentBirthDate} label="Дата рождения" required maxDate={new Date()} error={parentErrors.birthDate} onclick={() => { if (!parentBirthDate) parentBirthDate = parentFromGosuslugi.birthDate; }} />
 
-				<Input bind:value={parentPhone} label="Номер телефона" type="tel" required error={parentErrors.phone} />
+				<Input bind:value={parentPhone} label="Номер телефона" type="tel" required error={parentErrors.phone} onclick={() => { if (!parentPhone) parentPhone = parentFromGosuslugi.phone; }} />
 			</div>
 		</div>
 
@@ -331,18 +333,18 @@
 			{/if}
 
 			<div class="form-fields">
-				<Input bind:value={childLastName} label="Фамилия" required error={childErrors.lastName} />
+				<Input bind:value={childLastName} label="Фамилия" required error={childErrors.lastName} onclick={() => { if (!childLastName) childLastName = childrenFromGosuslugi[0].lastName; }} />
 
-				<Input bind:value={childFirstName} label="Имя" required error={childErrors.firstName} />
+				<Input bind:value={childFirstName} label="Имя" required error={childErrors.firstName} onclick={() => { if (!childFirstName) childFirstName = childrenFromGosuslugi[0].firstName; }} />
 
 				<div class="field-with-checkbox">
-					<Input bind:value={childMiddleName} label="Отчество (при наличии)" disabled={childNoMiddleName} error={childErrors.middleName} />
+					<Input bind:value={childMiddleName} label="Отчество (при наличии)" disabled={childNoMiddleName} error={childErrors.middleName} onclick={() => { if (!childMiddleName && !childNoMiddleName) childMiddleName = childrenFromGosuslugi[0].middleName; }} />
 					<Checkbox bind:checked={childNoMiddleName} label="Нет отчества по паспорту" size="s" />
 				</div>
 
-				<DatePicker bind:value={childBirthDate} label="Дата рождения" required maxDate={new Date()} error={childErrors.birthDate} />
+				<DatePicker bind:value={childBirthDate} label="Дата рождения" required maxDate={new Date()} error={childErrors.birthDate} onclick={() => { if (!childBirthDate) childBirthDate = childrenFromGosuslugi[0].birthDate; }} />
 
-				<Input bind:value={childPhone} label="Номер телефона" type="tel" required error={childErrors.phone} />
+				<Input bind:value={childPhone} label="Номер телефона" type="tel" required error={childErrors.phone} onclick={() => { if (!childPhone) childPhone = childrenFromGosuslugi[0].phone || '+7 999 000-00-00'; }} />
 
 				<div class="gender-section">
 					<span class="gender-label">Пол ребёнка</span>
@@ -356,11 +358,14 @@
 		<!-- Согласия -->
 		<div class="agreements">
 			<div class="agreement-item">
-				<Checkbox bind:checked={agreePersonalData} />
+				<Checkbox bind:checked={agreePersonalData} error={!!agreeError} />
 				<p class="agreement-text">
 					Я согласен(а) на <a href="#" class="link-green">обработку персональных данных</a>
 				</p>
 			</div>
+			{#if agreeError}
+				<p class="agree-error">{agreeError}</p>
+			{/if}
 			<div class="agreement-item no-checkbox">
 				<div class="checkbox-spacer"></div>
 				<p class="agreement-text">
@@ -636,6 +641,14 @@
 		display: flex;
 		flex-direction: column;
 		gap: 8px;
+	}
+
+	.agree-error {
+		font-family: 'Roboto', sans-serif;
+		font-size: 12px;
+		line-height: 16px;
+		color: var(--border-error, #e53935);
+		margin: 0;
 	}
 
 	.agreement-item {

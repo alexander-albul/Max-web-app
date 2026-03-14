@@ -42,6 +42,14 @@
 		'г. Альметьевск, ул. Ленина, д. 22, кв. 4'
 	];
 
+	const autofill = {
+		series: '1624',
+		number: '456789',
+		issueDate: new Date(2015, 6, 10),
+		departmentCode: '165-001',
+		birthPlace: 'Казань, Республика Татарстан, Россия'
+	};
+
 	// Паспортные данные
 	let series = $state('');
 	let number = $state('');
@@ -134,13 +142,13 @@
 			<h3 class="section-title">Данные паспорта родителя</h3>
 
 			<div class="form-fields">
-				<Input bind:value={series} label="Серия" size="l" error={errors.series} />
+				<Input bind:value={series} label="Серия" size="l" error={errors.series} onclick={() => { if (!series) series = autofill.series; }} />
 
-				<Input bind:value={number} label="Номер" size="l" error={errors.number} />
+				<Input bind:value={number} label="Номер" size="l" error={errors.number} onclick={() => { if (!number) number = autofill.number; }} />
 
-				<DatePicker bind:value={issueDate} label="Дата выдачи" size="l" maxDate={new Date()} error={errors.issueDate} />
+				<DatePicker bind:value={issueDate} label="Дата выдачи" size="l" maxDate={new Date()} error={errors.issueDate} onclick={() => { if (!issueDate) issueDate = autofill.issueDate; }} />
 
-				<Input bind:value={departmentCode} label="Код подразделения" size="l" error={errors.departmentCode} />
+				<Input bind:value={departmentCode} label="Код подразделения" size="l" error={errors.departmentCode} onclick={() => { if (!departmentCode) departmentCode = autofill.departmentCode; }} />
 
 				<div class="field-button-wrapper">
 					<Button
@@ -171,7 +179,7 @@
 					{/if}
 				</div>
 
-				<Input bind:value={birthPlace} label="Место рождения" size="l" error={errors.birthPlace} />
+				<Input bind:value={birthPlace} label="Место рождения" size="l" error={errors.birthPlace} onclick={() => { if (!birthPlace) birthPlace = autofill.birthPlace; }} />
 			</div>
 		</div>
 
